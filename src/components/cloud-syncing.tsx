@@ -2,250 +2,7 @@ import { Box } from '@mui/system';
 import { motion } from 'framer-motion';
 
 const easeCirc = (e: number): number => {
-  return e === 1 ? 1 : 1 - Math.pow(2, -10 * e);
-};
-
-interface CloudSyncingProps {
-  actionText?: string;
-}
-
-const CloudSyncing = ({ actionText = 'Syncing' }: CloudSyncingProps) => {
-  return (
-    <Box
-      sx={{
-        py: '80px',
-        px: '60px'
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: '24px'
-        }}
-      >
-        <Box
-          component={motion.div}
-          initial={{
-            y: 48,
-            opacity: 0
-          }}
-          animate={{
-            y: 0,
-            opacity: 1
-          }}
-          transition={{
-            duration: 1.25,
-            ease: easeCirc,
-            delay: 0.15
-          }}
-          sx={{
-            position: 'relative'
-          }}
-        >
-          <Box
-            sx={{
-              width: 46,
-              height: 46,
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative',
-              background: '#fff',
-              zIndex: 2,
-              boxShadow:
-                'rgba(29, 29, 32, 0.04) 0px 0px 0px 1px, rgba(99, 102, 241, 0.1) 0px 0px 0px 5px, 0 1px 3px 0 rgba(79,70,229,.25), 0 1px 2px -1px rgba(79,70,229,.25)'
-            }}
-          >
-            <CloudIcon />
-          </Box>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Box
-              key={i}
-              component={motion.div}
-              style={{
-                x: '-50%',
-                y: '-50%'
-              }}
-              initial={{
-                opacity: 0,
-                scale: 0
-              }}
-              animate={{
-                scale: [0, 1],
-                opacity: [0, 1, 0]
-              }}
-              transition={{
-                delay: 0.825 * i,
-                duration: 4.25,
-                ease: easeCirc,
-                times: [0, 0.25, 1],
-                repeat: Infinity
-              }}
-              sx={{
-                position: 'absolute',
-                border: '2px solid #e0e7ff',
-                width: 160,
-                aspectRatio: '1/1',
-                top: '50%',
-                left: '50%',
-                borderRadius: 9999
-              }}
-            />
-          ))}
-        </Box>
-        <Box
-          component={motion.div}
-          initial={{
-            opacity: 0
-          }}
-          animate={{
-            opacity: 1
-          }}
-          transition={{
-            duration: 0.5,
-            delay: 0.5,
-            ease: easeCirc
-          }}
-          sx={{
-            mask: 'linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)',
-            padding: '16px 0',
-            flex: '1 1 0%',
-            position: 'relative'
-          }}
-        >
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              left: 0,
-              right: 0,
-              height: '2px',
-              background: 'rgb(238 238 240)',
-              borderRadius: 9999
-            }}
-          />
-          <Box
-            component={motion.div}
-            initial={{
-              x: '-100%'
-            }}
-            animate={{
-              x: '100%',
-              rotate: [0, 180, 180, 0]
-            }}
-            transition={{
-              repeat: Infinity,
-              repeatType: 'mirror',
-              ease: 'easeInOut',
-              duration: 2,
-              delay: 0.25,
-              rotate: {
-                times: [0.49, 0.5, 0.99, 1],
-                duration: 4,
-                repeat: Infinity
-              }
-            }}
-            sx={{
-              position: 'absolute',
-              inset: 0
-            }}
-          >
-            <Box
-              sx={{
-                mask: 'linear-gradient(90deg,transparent,#000)',
-                paddingRight: '12px',
-                width: '33.3333%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <Box
-                sx={{
-                  width: '100%',
-                  backgroundColor: 'rgb(99 102 241)',
-                  boxShadow:
-                    'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(99, 102, 241, 0.15) 0px 0px 8px 2px',
-                  borderRadius: 999,
-                  height: '2px',
-                  position: 'relative'
-                }}
-              />
-              <Box
-                sx={{
-                  width: '4px',
-                  height: '4px',
-                  ml: '-4px',
-                  background: 'rgb(99 102 241)',
-                  borderRadius: 9999,
-                  boxShadow:
-                    'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(99, 102, 241, 0.4) 0px 0px 8px 2px'
-                }}
-              />
-            </Box>
-          </Box>
-        </Box>
-        <Box
-          component={motion.div}
-          initial={{
-            y: 48,
-            opacity: 0
-          }}
-          animate={{
-            y: 0,
-            opacity: 1
-          }}
-          transition={{
-            duration: 1.25,
-            ease: easeCirc,
-            delay: 0.25
-          }}
-        >
-          <Box
-            sx={{
-              boxShadow:
-                'rgba(29, 29, 32, 0.08) 0px 0px 0px 1px, 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)',
-              color: '#1d1d20',
-              fontWeight: 500,
-              fontSize: 14,
-              padding: '4px 12px',
-              background: '#fff',
-              borderRadius: '9999px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px'
-            }}
-          >
-            {actionText}
-            <Box
-              component={motion.div}
-              animate={{
-                rotate: 360
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: 'linear'
-              }}
-              sx={{
-                padding: '3px',
-                background: '#1d1d20',
-                borderRadius: '999px',
-                display: 'flex'
-              }}
-            >
-              <CircleIcon />
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
-  );
+  return e === 1 ? 1 : 1 - 2 ** (-10 * e);
 };
 
 const CircleIcon = () => {
@@ -286,6 +43,249 @@ const CloudIcon = () => {
         strokeOpacity="0.2"
       />
     </svg>
+  );
+};
+
+interface CloudSyncingProps {
+  actionText?: string;
+}
+
+const CloudSyncing = ({ actionText = 'Syncing' }: CloudSyncingProps) => {
+  return (
+    <Box
+      sx={{
+        py: '80px',
+        px: '60px',
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '24px',
+        }}
+      >
+        <Box
+          component={motion.div}
+          initial={{
+            y: 48,
+            opacity: 0,
+          }}
+          animate={{
+            y: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 1.25,
+            ease: easeCirc,
+            delay: 0.15,
+          }}
+          sx={{
+            position: 'relative',
+          }}
+        >
+          <Box
+            sx={{
+              width: 46,
+              height: 46,
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative',
+              background: '#fff',
+              zIndex: 2,
+              boxShadow:
+                'rgba(29, 29, 32, 0.04) 0px 0px 0px 1px, rgba(99, 102, 241, 0.1) 0px 0px 0px 5px, 0 1px 3px 0 rgba(79,70,229,.25), 0 1px 2px -1px rgba(79,70,229,.25)',
+            }}
+          >
+            <CloudIcon />
+          </Box>
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Box
+              key={i}
+              component={motion.div}
+              style={{
+                x: '-50%',
+                y: '-50%',
+              }}
+              initial={{
+                opacity: 0,
+                scale: 0,
+              }}
+              animate={{
+                scale: [0, 1],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                delay: 0.825 * i,
+                duration: 4.25,
+                ease: easeCirc,
+                times: [0, 0.25, 1],
+                repeat: Number.POSITIVE_INFINITY,
+              }}
+              sx={{
+                position: 'absolute',
+                border: '2px solid #e0e7ff',
+                width: 160,
+                aspectRatio: '1/1',
+                top: '50%',
+                left: '50%',
+                borderRadius: 9999,
+              }}
+            />
+          ))}
+        </Box>
+        <Box
+          component={motion.div}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.5,
+            ease: easeCirc,
+          }}
+          sx={{
+            mask: 'linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)',
+            padding: '16px 0',
+            flex: '1 1 0%',
+            position: 'relative',
+          }}
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              left: 0,
+              right: 0,
+              height: '2px',
+              background: 'rgb(238 238 240)',
+              borderRadius: 9999,
+            }}
+          />
+          <Box
+            component={motion.div}
+            initial={{
+              x: '-100%',
+            }}
+            animate={{
+              x: '100%',
+              rotate: [0, 180, 180, 0],
+            }}
+            transition={{
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: 'mirror',
+              ease: 'easeInOut',
+              duration: 2,
+              delay: 0.25,
+              rotate: {
+                times: [0.49, 0.5, 0.99, 1],
+                duration: 4,
+                repeat: Number.POSITIVE_INFINITY,
+              },
+            }}
+            sx={{
+              position: 'absolute',
+              inset: 0,
+            }}
+          >
+            <Box
+              sx={{
+                mask: 'linear-gradient(90deg,transparent,#000)',
+                paddingRight: '12px',
+                width: '33.3333%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  width: '100%',
+                  backgroundColor: 'rgb(99 102 241)',
+                  boxShadow:
+                    'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(99, 102, 241, 0.15) 0px 0px 8px 2px',
+                  borderRadius: 999,
+                  height: '2px',
+                  position: 'relative',
+                }}
+              />
+              <Box
+                sx={{
+                  width: '4px',
+                  height: '4px',
+                  ml: '-4px',
+                  background: 'rgb(99 102 241)',
+                  borderRadius: 9999,
+                  boxShadow:
+                    'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(99, 102, 241, 0.4) 0px 0px 8px 2px',
+                }}
+              />
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          component={motion.div}
+          initial={{
+            y: 48,
+            opacity: 0,
+          }}
+          animate={{
+            y: 0,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 1.25,
+            ease: easeCirc,
+            delay: 0.25,
+          }}
+        >
+          <Box
+            sx={{
+              boxShadow:
+                'rgba(29, 29, 32, 0.08) 0px 0px 0px 1px, 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)',
+              color: '#1d1d20',
+              fontWeight: 500,
+              fontSize: 14,
+              padding: '4px 12px',
+              background: '#fff',
+              borderRadius: '9999px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+            }}
+          >
+            {actionText}
+            <Box
+              component={motion.div}
+              animate={{
+                rotate: 360,
+              }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: 'linear',
+              }}
+              sx={{
+                padding: '3px',
+                background: '#1d1d20',
+                borderRadius: '999px',
+                display: 'flex',
+              }}
+            >
+              <CircleIcon />
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

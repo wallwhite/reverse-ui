@@ -1,6 +1,6 @@
+import { useCallback, useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import { motion } from 'framer-motion';
-import { useCallback, useEffect, useState } from 'react';
 
 enum LogEnum {
   LOG = 'LOG',
@@ -47,13 +47,13 @@ const LogsExplorer: React.FC<LogsExplorerProps> = (props) => {
   const generateLogEntry = useCallback(
     (timeOffset?: number): LogEntry => {
       const timestamp = new Date();
+
       timestamp.setSeconds(timestamp.getSeconds() - (timeOffset ?? 0));
 
       const randomValue = Math.random();
-      const logLevel =
-        randomValue > 0.9 ? LogEnum.ERROR : randomValue > 0.45 ? LogEnum.INFO : LogEnum.LOG;
+      const logLevel = randomValue > 0.9 ? LogEnum.ERROR : randomValue > 0.45 ? LogEnum.INFO : LogEnum.LOG;
 
-      const messages = logs?.[logLevel];
+      const messages = logs[logLevel];
       const randomIndex = Math.round(Math.random() * ((messages?.length ?? 1) - 1));
 
       return {
@@ -63,7 +63,7 @@ const LogsExplorer: React.FC<LogsExplorerProps> = (props) => {
         message: messages?.[randomIndex] ?? '',
       };
     },
-    [logs]
+    [logs],
   );
 
   const initialLogs = [
@@ -84,6 +84,7 @@ const LogsExplorer: React.FC<LogsExplorerProps> = (props) => {
   useEffect(() => {
     const id = setInterval(() => {
       const shouldAddLog = Math.random() > 0.6;
+
       if (shouldAddLog) {
         setLogEntries((prevLogs) => [generateLogEntry(), ...prevLogs]);
       }

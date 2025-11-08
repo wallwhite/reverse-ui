@@ -16,7 +16,7 @@ const TextCycler = ({
   duration = 400,
   letterDelay = 0.025,
   blurStrength = 10,
-  autoplay = true
+  autoplay = true,
 }: TextCyclerProps) => {
   const [currentText, setCurrentText] = useState(texts[0]);
   const [iteration, setIteration] = useState(0);
@@ -37,56 +37,68 @@ const TextCycler = ({
   }, []);
 
   useLayoutEffect(() => {
-    if (!autoplay || !isTabVisible) return;
+    if (!autoplay || !isTabVisible) {
+      return;
+    }
 
     const rotationTimer = setInterval(() => {
       setCurrentText((prevText) => {
+        const NOT_FOUND_INDEX = -1;
         const currentIndex = texts.indexOf(prevText);
-        if (currentIndex === -1) return texts[0];
+
+        if (currentIndex === NOT_FOUND_INDEX) {
+          return texts[0];
+        }
+
         const nextIndex = (currentIndex + 1) % texts.length;
+
         return texts[nextIndex];
       });
 
       setIteration((prev) => prev + 1);
     }, interval);
 
-    return () => clearInterval(rotationTimer);
+    return () => {
+      clearInterval(rotationTimer);
+    };
   }, [isTabVisible, currentText, interval, texts, autoplay]);
+
+  const DURATION_DIVISOR = 1000;
 
   return (
     <>
       <AnimatePresence mode="popLayout" initial={false}>
-        {currentText.split('').map((letter, index) => (
+        {[...currentText].map((letter, index) => (
           <motion.span
             key={uniqueId + index + iteration}
             initial={{
               opacity: 0,
-              filter: `blur(${blurStrength}px)`
+              filter: `blur(${blurStrength}px)`,
             }}
             style={{
-              display: 'inline-block'
+              display: 'inline-block',
             }}
             animate={{
               opacity: 1,
               filter: 'blur(0px)',
               transition: {
                 delay: index * letterDelay,
-                duration: duration / 1000
+                duration: duration / DURATION_DIVISOR,
               },
               transitionEnd: {
-                filter: 'none'
-              }
+                filter: 'none',
+              },
             }}
             exit={{
               opacity: 0,
               filter: `blur(${blurStrength}px)`,
               transition: {
                 delay: index * letterDelay,
-                duration: duration / 1000
-              }
+                duration: duration / DURATION_DIVISOR,
+              },
             }}
           >
-            {letter !== ' ' ? letter : '\u00A0'}
+            {letter === ' ' ? '\u00A0' : letter}
           </motion.span>
         ))}
       </AnimatePresence>

@@ -14,16 +14,16 @@ const ShinyText = ({ text, duration = 2, delay = 0 }: ShinyTextProps) => {
     <Box
       component={motion.p}
       initial={{
-        backgroundPosition: '100% center'
+        backgroundPosition: '100% center',
       }}
       animate={{
-        backgroundPosition: '0% center'
+        backgroundPosition: '0% center',
       }}
       transition={{
-        repeat: Infinity,
+        repeat: Number.POSITIVE_INFINITY,
         duration,
         repeatDelay: delay,
-        ease: 'linear'
+        ease: 'linear',
       }}
       sx={{
         position: 'relative',
@@ -41,7 +41,7 @@ const ShinyText = ({ text, duration = 2, delay = 0 }: ShinyTextProps) => {
             transparent calc(50% + ${width}px)
           ),
           linear-gradient(#b5b5b5a4,#b5b5b5a4)
-        `
+        `,
       }}
     >
       {text}

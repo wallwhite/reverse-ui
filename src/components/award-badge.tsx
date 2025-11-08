@@ -1,10 +1,10 @@
-import { Box } from '@mui/system';
 import { useState, useRef, useEffect, useMemo } from 'react';
+import { Box } from '@mui/system';
 
 const ANIMATION_CONSTANTS = {
   SPRING_STIFFNESS: 200,
   SPRING_DAMPING: 10,
-  MAX_DELTA_TIME: 0.016
+  MAX_DELTA_TIME: 0.016,
 };
 
 const SHINE_GRADIENT_COLORS = [
@@ -17,7 +17,7 @@ const SHINE_GRADIENT_COLORS = [
   'hsl(300, 20%, 35%)',
   'transparent',
   'transparent',
-  'white'
+  'white',
 ];
 
 interface TransformMatrix {
@@ -63,7 +63,7 @@ const calculateTransformMatrix = (rotationAngles: RotationAngles): TransformMatr
     translateX: 0,
     translateY: 0,
     translateZ: 0,
-    perspectiveFactor: 1
+    perspectiveFactor: 1,
   };
 };
 
@@ -92,7 +92,7 @@ const ShineEffect = ({ width, height, shineAngle }: ShineEffectProps) => {
   return (
     <g
       style={{
-        mixBlendMode: 'overlay'
+        mixBlendMode: 'overlay',
       }}
       mask="url(#badgeMask)"
     >
@@ -101,7 +101,7 @@ const ShineEffect = ({ width, height, shineAngle }: ShineEffectProps) => {
           key={index}
           style={{
             transform: `rotate(${3.2 * shineAngle + 10 * index - 20}deg)`,
-            transformOrigin: 'center center'
+            transformOrigin: 'center center',
           }}
         >
           <polygon
@@ -124,12 +124,12 @@ interface Velocity {
 const useSpringAnimation = (targetPosition: RotationAngles, isActive: boolean): RotationAngles => {
   const velocity = useRef<Velocity>({
     x: 0,
-    y: 0
+    y: 0,
   });
 
   const [currentPosition, setCurrentPosition] = useState<RotationAngles>({
     x: 0,
-    y: 0
+    y: 0,
   });
 
   const animationFrameId = useRef<number | null>(null);
@@ -138,39 +138,36 @@ const useSpringAnimation = (targetPosition: RotationAngles, isActive: boolean): 
   useEffect(() => {
     const animate = (): void => {
       const currentTime = performance.now();
-      const deltaTime = Math.min(
-        (currentTime - lastFrameTime.current) / 1000,
-        ANIMATION_CONSTANTS.MAX_DELTA_TIME
-      );
+      const deltaTime = Math.min((currentTime - lastFrameTime.current) / 1000, ANIMATION_CONSTANTS.MAX_DELTA_TIME);
+
       lastFrameTime.current = currentTime;
 
       const effectiveTarget = isActive
         ? targetPosition
         : {
             x: Math.sin((currentTime / 4000) * Math.PI),
-            y: Math.sin((currentTime / 2000) * Math.PI)
+            y: Math.sin((currentTime / 2000) * Math.PI),
           };
 
-      const forceX =
-        (effectiveTarget.x - currentPosition.x) * ANIMATION_CONSTANTS.SPRING_STIFFNESS;
-      const forceY =
-        (effectiveTarget.y - currentPosition.y) * ANIMATION_CONSTANTS.SPRING_STIFFNESS;
+      const forceX = (effectiveTarget.x - currentPosition.x) * ANIMATION_CONSTANTS.SPRING_STIFFNESS;
+      const forceY = (effectiveTarget.y - currentPosition.y) * ANIMATION_CONSTANTS.SPRING_STIFFNESS;
 
       const dampingX = -velocity.current.x * ANIMATION_CONSTANTS.SPRING_DAMPING;
       const dampingY = -velocity.current.y * ANIMATION_CONSTANTS.SPRING_DAMPING;
 
       velocity.current = {
         x: velocity.current.x + (forceX + dampingX) * deltaTime,
-        y: velocity.current.y + (forceY + dampingY) * deltaTime
+        y: velocity.current.y + (forceY + dampingY) * deltaTime,
       };
 
       setCurrentPosition((prev) => ({
         x: prev.x + velocity.current.x * deltaTime,
-        y: prev.y + velocity.current.y * deltaTime
+        y: prev.y + velocity.current.y * deltaTime,
       }));
 
       animationFrameId.current = requestAnimationFrame(animate);
     };
+
     animationFrameId.current = requestAnimationFrame(animate);
 
     return () => {
@@ -200,7 +197,7 @@ const AwardBadge = ({
   textColor = '#946500',
   maxRotation = 15,
   title = '',
-  subtitle = ''
+  subtitle = '',
 }: AwardBadgeProps) => {
   const svgWidth = 260;
   const svgHeight = 54;
@@ -208,19 +205,16 @@ const AwardBadge = ({
   const [isHovered, setIsHovered] = useState(false);
   const [targetRotation, setTargetRotation] = useState<RotationAngles>({
     x: 0,
-    y: 0
+    y: 0,
   });
 
   const currentRotation = useSpringAnimation(targetRotation, isHovered);
 
-  const transformMatrix = useMemo(
-    () => calculateTransformMatrix(currentRotation),
-    [currentRotation]
-  );
+  const transformMatrix = useMemo(() => calculateTransformMatrix(currentRotation), [currentRotation]);
 
   const shineAngle = useMemo(
     () => 2 * Math.hypot(currentRotation.x, currentRotation.y),
-    [currentRotation.x, currentRotation.y]
+    [currentRotation.x, currentRotation.y],
   );
 
   const handleMouseMove = useMemo(
@@ -228,12 +222,13 @@ const AwardBadge = ({
       if (!isHovered) return;
 
       const rect = event.currentTarget.getBoundingClientRect();
+
       setTargetRotation({
         x: ((event.clientY - rect.top) / rect.height - 0.5) * 2 * maxRotation,
-        y: -(2 * ((event.clientX - rect.left) / rect.width - 0.5)) * maxRotation
+        y: -(2 * ((event.clientX - rect.left) / rect.width - 0.5)) * maxRotation,
       });
     },
-    [isHovered, maxRotation]
+    [isHovered, maxRotation],
   );
 
   const handleMouseLeave = useMemo(
@@ -241,10 +236,10 @@ const AwardBadge = ({
       setIsHovered(false);
       setTargetRotation({
         x: 0,
-        y: 0
+        y: 0,
       });
     },
-    []
+    [],
   );
 
   return (
@@ -254,10 +249,12 @@ const AwardBadge = ({
       target="_blank"
       rel="noopener"
       sx={{
-        position: 'relative'
+        position: 'relative',
       }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => {
+        setIsHovered(true);
+      }}
       onMouseLeave={handleMouseLeave}
     >
       <Box
@@ -265,7 +262,7 @@ const AwardBadge = ({
           pointerEvents: 'none',
           userSelect: 'none',
           transform: `perspective(500px) matrix3d(${Object.values(transformMatrix).join(',')})`,
-          transformOrigin: 'center center'
+          transformOrigin: 'center center',
         }}
       >
         <Box
@@ -274,7 +271,7 @@ const AwardBadge = ({
           viewBox={`0 0 ${svgWidth} ${svgHeight}`}
           sx={{
             width: 260,
-            height: 'auto'
+            height: 'auto',
           }}
         >
           <defs>
@@ -296,24 +293,10 @@ const AwardBadge = ({
             stroke={borderColor}
             strokeWidth="1"
           />
-          <text
-            fontFamily="Helvetica-Bold, Helvetica"
-            fontSize="9"
-            fontWeight="bold"
-            fill={textColor}
-            x="53"
-            y="20"
-          >
+          <text fontFamily="Helvetica-Bold, Helvetica" fontSize="9" fontWeight="bold" fill={textColor} x="53" y="20">
             {title}
           </text>
-          <text
-            fontFamily="Helvetica-Bold, Helvetica"
-            fontSize="16"
-            fontWeight="bold"
-            fill={textColor}
-            x="52"
-            y="40"
-          >
+          <text fontFamily="Helvetica-Bold, Helvetica" fontSize="16" fontWeight="bold" fill={textColor} x="52" y="40">
             {subtitle}
           </text>
           <WreathIcon color={textColor} />

@@ -1,5 +1,5 @@
-import { Box } from '@mui/system';
 import { keyframes } from '@emotion/react';
+import { Box } from '@mui/system';
 
 const CIRCLE_DIAMETER = 240;
 const ITEM_SIZE = 48;
@@ -18,7 +18,7 @@ const OrbitRings = ({ icons, logo }: OrbitRingsProps) => {
       sx={{
         position: 'relative',
         height: 328,
-        width: 328
+        width: 328,
       }}
     >
       <Box
@@ -29,7 +29,7 @@ const OrbitRings = ({ icons, logo }: OrbitRingsProps) => {
           height: '100%',
           opacity: 0.25,
           animation: `${rotateGradientsKeyframe} 10s linear infinite`,
-          willChange: 'transform'
+          willChange: 'transform',
         }}
       >
         {Array.from({ length: 8 }, (_, index) => {
@@ -58,8 +58,8 @@ const OrbitRings = ({ icons, logo }: OrbitRingsProps) => {
                   padding: '1px',
                   pointerEvents: 'none',
                   background:
-                    'conic-gradient(rgba(109,46,255,0) 6.7%,rgba(158,122,255,.35) 20.8%,rgba(254,139,187,.7) 34.9%,#ffbd7a 49.99%,rgba(255,189,122,0) 50%)'
-                }
+                    'conic-gradient(rgba(109,46,255,0) 6.7%,rgba(158,122,255,.35) 20.8%,rgba(254,139,187,.7) 34.9%,#ffbd7a 49.99%,rgba(255,189,122,0) 50%)',
+                },
               }}
             />
           );
@@ -89,8 +89,8 @@ const OrbitRings = ({ icons, logo }: OrbitRingsProps) => {
                   pointerEvents: 'none',
                   mask: 'linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)',
                   borderRadius: 'inherit',
-                  maskComposite: 'xor'
-                }
+                  maskComposite: 'xor',
+                },
               }}
             />
           );
@@ -107,7 +107,7 @@ const OrbitRings = ({ icons, logo }: OrbitRingsProps) => {
           height: CIRCLE_DIAMETER,
           animation: `${rotateContainerKeyframe} 80s linear infinite`,
           // rotate opposite side, so images don't get rotated
-          willChange: 'transform'
+          willChange: 'transform',
         }}
       >
         {icons.map((icon, index) => {
@@ -132,13 +132,12 @@ const OrbitRings = ({ icons, logo }: OrbitRingsProps) => {
                 justifyContent: 'center',
                 background: 'rgba(39, 39, 42, 1)',
                 border: '1px solid rgba(84, 84, 89, 0.65)',
-                backgroundImage:
-                  'linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 67%)',
+                backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 67%)',
                 position: 'absolute',
                 left: x,
                 top: y,
                 animation: `${rotateIconKeyframe} 80s linear infinite`,
-                willChange: 'transform'
+                willChange: 'transform',
               }}
             >
               <img src={icon} alt="" />
@@ -154,8 +153,8 @@ const OrbitRings = ({ icons, logo }: OrbitRingsProps) => {
           transform: 'translateX(-50%) translateY(-50%)',
           img: {
             width: 64,
-            filter: 'grayscale(1)'
-          }
+            filter: 'grayscale(1)',
+          },
         }}
       >
         <img className="RuiOrbit-logo" src={logo} alt="Logo" />

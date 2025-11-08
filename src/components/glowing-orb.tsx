@@ -1,9 +1,9 @@
+import { useRef, useState } from 'react';
 import { Box } from '@mui/system';
 import { motion, useAnimationFrame, useMotionValue } from 'framer-motion';
-import { useRef, useState, ReactNode } from 'react';
 
 const speed = 15;
-const size = 82;
+const defaultSize = 82;
 
 const GlowingOrb = () => {
   return (
@@ -11,14 +11,14 @@ const GlowingOrb = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
       }}
     >
       <svg
         width="0"
         height="0"
         style={{
-          position: 'absolute'
+          position: 'absolute',
         }}
       >
         <defs>
@@ -32,19 +32,9 @@ const GlowingOrb = () => {
             overflow="visible"
           >
             <feTurbulence type="fractalNoise" baseFrequency="0.0225" numOctaves="3" result="noise" />
-            <feColorMatrix
-              type="matrix"
-              values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 40 -15"
-              result="noisyAlpha"
-            />
+            <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 40 -15" result="noisyAlpha" />
             <feComposite operator="in" in="SourceGraphic" in2="noisyAlpha" />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="noise"
-              scale="300"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="300" xChannelSelector="R" yChannelSelector="G" />
           </filter>
         </defs>
       </svg>
@@ -59,7 +49,7 @@ const GlowingOrb = () => {
           clipPath: 'inset(0 0 0 0 round 50%)',
           backgroundImage: 'radial-gradient(circle at 50% 30%, #00F0FF 0%, #0031FF 75%)',
           boxShadow:
-            '0 4px 6px 0 rgba(0,123,255,0.00), 0 5px 10px 0 rgba(0,121,255,0.50), inset 0 0 1px 0 rgba(255,255,255,0.90), inset 0 1px 7px 0 #A4F0FF'
+            '0 4px 6px 0 rgba(0,123,255,0.00), 0 5px 10px 0 rgba(0,121,255,0.50), inset 0 0 1px 0 rgba(255,255,255,0.90), inset 0 1px 7px 0 #A4F0FF',
         }}
       >
         <Box
@@ -70,8 +60,7 @@ const GlowingOrb = () => {
             left: '0',
             height: '100%',
             width: '100%',
-            backgroundImage:
-              'radial-gradient(circle at 50% 90%, #E2FFFF 0%, rgba(0,49,255,0.00) 70%)'
+            backgroundImage: 'radial-gradient(circle at 50% 90%, #E2FFFF 0%, rgba(0,49,255,0.00) 70%)',
           }}
         />
         <Box
@@ -79,12 +68,12 @@ const GlowingOrb = () => {
           animate={{
             rotate: [-60, 0, 90],
             scale: [1.2, 1, 1],
-            y: [6, 4, 8]
+            y: [6, 4, 8],
           }}
           transition={{
             duration: 2,
-            repeat: Infinity,
-            repeatType: 'reverse'
+            repeat: Number.POSITIVE_INFINITY,
+            repeatType: 'reverse',
           }}
           sx={{
             borderRadius: '50%',
@@ -94,8 +83,7 @@ const GlowingOrb = () => {
             height: 'calc(100% - 10px)',
             width: 'calc(100% - 10px)',
             filter: 'blur(2px)',
-            background:
-              'radial-gradient(circle at 33% 12%, #F0FFFF 0%, #00DDFF 26%, rgba(0,49,255,0.00) 63%)'
+            background: 'radial-gradient(circle at 33% 12%, #F0FFFF 0%, #00DDFF 26%, rgba(0,49,255,0.00) 63%)',
           }}
         />
         <Box
@@ -109,19 +97,19 @@ const GlowingOrb = () => {
             backgroundImage:
               'radial-gradient(circle at 31% 12%, rgba(254,254,254,0.0) 0%, rgba(0,221,255,0.0) 31%, #0026CC 77%)',
             filter: 'blur(1px)',
-            opacity: 0.65
+            opacity: 0.65,
           }}
         />
         <Box
           component={motion.div}
           animate={{
             scale: [1, 1.1],
-            filter: ['blur(2px)', 'blur(4px)']
+            filter: ['blur(2px)', 'blur(4px)'],
           }}
           transition={{
             duration: 1.3,
-            repeat: Infinity,
-            repeatType: 'reverse'
+            repeat: Number.POSITIVE_INFINITY,
+            repeatType: 'reverse',
           }}
           sx={{
             borderRadius: '50%',
@@ -130,20 +118,19 @@ const GlowingOrb = () => {
             left: '24px',
             height: '48px',
             width: '48px',
-            background:
-              'linear-gradient(-36deg, #E8FAFF 12%, #00BBFF 36%, rgba(0,49,255,0.00) 54%)'
+            background: 'linear-gradient(-36deg, #E8FAFF 12%, #00BBFF 36%, rgba(0,49,255,0.00) 54%)',
           }}
         />
         <Box
           component={motion.div}
           animate={{
             scale: [1, 1.1],
-            filter: ['blur(2px)', 'blur(4px)']
+            filter: ['blur(2px)', 'blur(4px)'],
           }}
           transition={{
             duration: 1.3,
-            repeat: Infinity,
-            repeatType: 'reverse'
+            repeat: Number.POSITIVE_INFINITY,
+            repeatType: 'reverse',
           }}
           sx={{
             borderRadius: '50%',
@@ -153,19 +140,18 @@ const GlowingOrb = () => {
             height: '48px',
             width: '48px',
             transform: 'rotate(12deg)',
-            backgroundImage:
-              'linear-gradient(163deg, #E8FAFF 0%, #0099FF 19%, rgba(0,49,255,0.00) 50%)'
+            backgroundImage: 'linear-gradient(163deg, #E8FAFF 0%, #0099FF 19%, rgba(0,49,255,0.00) 50%)',
           }}
         />
         <Box
           component={motion.div}
           animate={{
-            rotate: [0, 360]
+            rotate: [0, 360],
           }}
           transition={{
             duration: 10,
-            repeat: Infinity,
-            repeatType: 'mirror'
+            repeat: Number.POSITIVE_INFINITY,
+            repeatType: 'mirror',
           }}
           sx={{
             position: 'absolute',
@@ -174,7 +160,7 @@ const GlowingOrb = () => {
             left: '0',
             height: '50%',
             width: '50%',
-            filter: 'url(#dissolve-filter) blur(4px)'
+            filter: 'url(#dissolve-filter) blur(4px)',
           }}
         />
         <Box
@@ -186,7 +172,7 @@ const GlowingOrb = () => {
             left: '4px',
             height: 'calc(100% - 8px)',
             width: 'calc(100% - 8px)',
-            background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.00) 100%)'
+            background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.00) 100%)',
           }}
         />
         <Box
@@ -199,7 +185,7 @@ const GlowingOrb = () => {
             transform: 'rotate(27deg)',
             background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.00) 100%)',
             borderRadius: '10px',
-            filter: 'blur(4px)'
+            filter: 'blur(4px)',
           }}
         />
         <Box
@@ -212,7 +198,7 @@ const GlowingOrb = () => {
             transform: 'rotate(-142deg)',
             backgroundImage: 'linear-gradient(180deg, #00F0FF 0%, rgba(255,255,255,0.00) 100%)',
             borderRadius: '10px',
-            filter: 'blur(4px)'
+            filter: 'blur(4px)',
           }}
         />
         <Box
@@ -226,7 +212,7 @@ const GlowingOrb = () => {
             transform: 'rotate(79deg)',
             backgroundImage: 'linear-gradient(180deg, #00BBFF 0%, rgba(255,255,255,0.00) 100%)',
             borderRadius: '10px',
-            filter: 'blur(4px)'
+            filter: 'blur(4px)',
           }}
         />
         <Box
@@ -239,19 +225,18 @@ const GlowingOrb = () => {
             opacity: 0.8,
             borderRadius: '50%',
             background: 'transparent',
-            boxShadow:
-              'inset 0 -1px 6px 1px rgba(255,255,255,0.50), inset 0 3px 4px 0px rgba(255,255,255,0.50)'
+            boxShadow: 'inset 0 -1px 6px 1px rgba(255,255,255,0.50), inset 0 3px 4px 0px rgba(255,255,255,0.50)',
           }}
         />
         <Box
           component={motion.div}
           animate={{
-            rotate: [0, 360]
+            rotate: [0, 360],
           }}
           transition={{
             duration: 3.5,
-            repeat: Infinity,
-            ease: 'easeInOut'
+            repeat: Number.POSITIVE_INFINITY,
+            ease: 'easeInOut',
           }}
           sx={{
             opacity: 0.5,
@@ -262,7 +247,7 @@ const GlowingOrb = () => {
             width: size - 12,
             background: 'radial-gradient(circle at 50% 100%, #fff 0%, rgba(255, 255, 255, 0) 80%)',
             borderRadius: '999px',
-            filter: 'blur(1px)'
+            filter: 'blur(1px)',
           }}
         />
         <Box
@@ -271,23 +256,23 @@ const GlowingOrb = () => {
             position: 'absolute',
             inset: 0,
             filter: 'blur(1px)',
-            mixBlendMode: 'plus-lighter'
+            mixBlendMode: 'plus-lighter',
           }}
           animate={{
-            rotate: [30, -30]
+            rotate: [30, -30],
           }}
           transition={{
             duration: 12,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             repeatType: 'reverse',
-            ease: 'linear'
+            ease: 'linear',
           }}
         >
           <div
             style={{
               transform: `scale(1.15) translateY(${size * 0.35}px)`,
               width: '100%',
-              height: '100%'
+              height: '100%',
             }}
           >
             <WavyBlob color="rgba(255, 255, 255, 0.1)" duration={60 / (speed * 1.75)} size={size} />
@@ -300,23 +285,23 @@ const GlowingOrb = () => {
             inset: 0,
             filter: 'blur(1px)',
             mixBlendMode: 'plus-lighter',
-            opacity: 0.1
+            opacity: 0.1,
           }}
           animate={{
-            rotate: [-30, 30]
+            rotate: [-30, 30],
           }}
           transition={{
             duration: 12,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             repeatType: 'reverse',
-            ease: 'linear'
+            ease: 'linear',
           }}
         >
           <div
             style={{
               transform: `scale(1.15) translateY(-${size * 0.35}px)`,
               width: '100%',
-              height: '100%'
+              height: '100%',
             }}
           >
             <WavyBlob color="#fff" duration={60 / (speed * 2.25)} size={size} />
@@ -325,7 +310,7 @@ const GlowingOrb = () => {
         <Box
           sx={{
             position: 'absolute',
-            inset: 0
+            inset: 0,
           }}
         >
           <ParticleEffect />
@@ -340,7 +325,7 @@ const GlowingOrb = () => {
           textAlign: 'center',
           color: '#fff',
           letterSpacing: 1,
-          mt: '24px'
+          mt: '24px',
         }}
       >
         Stardust Breaker
@@ -362,9 +347,10 @@ const WavyBlob = ({ color = '#fff', duration = 1, size = 80 }: WavyBlobProps) =>
   // Create 6 points around a circle
   const points = Array.from({ length: 6 }, (_, i) => {
     const angle = (i / 6) * Math.PI * 2;
+
     return {
       baseX: Math.cos(angle) * 0.9,
-      baseY: Math.sin(angle) * 0.9
+      baseY: Math.sin(angle) * 0.9,
     };
   });
 
@@ -385,7 +371,7 @@ const WavyBlob = ({ color = '#fff', duration = 1, size = 80 }: WavyBlobProps) =>
 
       return {
         x: (point.baseX + xOffset) * size * 0.45 + size / 2,
-        y: (point.baseY + yOffset) * size * 0.45 + size / 2
+        y: (point.baseY + yOffset) * size * 0.45 + size / 2,
       };
     });
 
@@ -402,12 +388,12 @@ const WavyBlob = ({ color = '#fff', duration = 1, size = 80 }: WavyBlobProps) =>
 
       const control1 = {
         x: point.x + Math.cos(currentAngle + Math.PI / 2) * handleLength,
-        y: point.y + Math.sin(currentAngle + Math.PI / 2) * handleLength
+        y: point.y + Math.sin(currentAngle + Math.PI / 2) * handleLength,
       };
 
       const control2 = {
         x: next.x + Math.cos(nextAngle - Math.PI / 2) * handleLength,
-        y: next.y + Math.sin(nextAngle - Math.PI / 2) * handleLength
+        y: next.y + Math.sin(nextAngle - Math.PI / 2) * handleLength,
       };
 
       pathData += ` C ${control1.x},${control1.y} ${control2.x},${control2.y} ${next.x},${next.y}`;
@@ -423,7 +409,7 @@ const WavyBlob = ({ color = '#fff', duration = 1, size = 80 }: WavyBlobProps) =>
       sx={{
         position: 'relative',
         width: size,
-        height: size
+        height: size,
       }}
     >
       <Box
@@ -434,20 +420,20 @@ const WavyBlob = ({ color = '#fff', duration = 1, size = 80 }: WavyBlobProps) =>
         sx={{
           position: 'absolute',
           top: 0,
-          left: 0
+          left: 0,
         }}
       >
         <motion.path
           ref={pathRef}
           fill={color}
           initial={{
-            scale: 0
+            scale: 0,
           }}
           animate={{
-            scale: 1
+            scale: 1,
           }}
           transition={{
-            duration: 0.5
+            duration: 0.5,
           }}
         />
       </Box>
@@ -459,11 +445,11 @@ const ParticleEffect = () => {
   const [dots] = useState(() =>
     Array.from({ length: 16 }).map((_, index) => ({
       id: crypto.randomUUID(),
-      size: Math.floor(10 + 1 * Math.random()),
+      size: Math.floor(10 + Number(Math.random())),
       left: 12 + 56 * Math.random(),
       delay: 0.4 * index,
-      direction: Math.random() < 0.5 ? -1 : 1
-    }))
+      direction: Math.random() < 0.5 ? -1 : 1,
+    })),
   );
 
   return (
@@ -477,30 +463,30 @@ const ParticleEffect = () => {
           xmlns="http://www.w3.org/2000/svg"
           initial={{
             opacity: 0,
-            y: 80
+            y: 80,
           }}
           animate={{
             opacity: [1, 0.8, 0.6, 0.6],
             y: -20,
             scale: [1, 0.8, 0.8, 0],
             x: dot.direction * 10,
-            rotate: [0, 360]
+            rotate: [0, 360],
           }}
           exit={{
-            opacity: 0
+            opacity: 0,
           }}
           sx={{
             position: 'absolute',
             height: dot.size,
             width: dot.size,
             left: dot.left,
-            top: 24
+            top: 24,
           }}
           transition={{
             duration: 3.5,
             ease: 'linear',
             delay: dot.delay,
-            repeat: Infinity
+            repeat: Number.POSITIVE_INFINITY,
           }}
         >
           <path

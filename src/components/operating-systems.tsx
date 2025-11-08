@@ -1,20 +1,22 @@
-import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
+import { Box } from '@mui/system';
 import { motion } from 'framer-motion';
 
 const easeInOutExpo = (e: number): number => {
-  return e < 0.5 ? 0.5 * Math.pow(2, 20 * e - 10) : -0.5 * Math.pow(2, -20 * e + 10) + 1;
+  return e < 0.5 ? 0.5 * 2 ** (20 * e - 10) : -0.5 * 2 ** (-20 * e + 10) + 1;
 };
 
 const easeOutExpo = (e: number): number => {
-  return 1 === e ? 1 : 1 - Math.pow(2, -10 * e);
+  return e === 1 ? 1 : 1 - 2 ** (-10 * e);
 };
 
 const OperatingSystems: React.FC = () => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setShouldAnimate(true), 1000);
+    setTimeout(() => {
+      setShouldAnimate(true);
+    }, 1000);
   }, []);
 
   return (

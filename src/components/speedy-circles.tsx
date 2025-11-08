@@ -1,5 +1,5 @@
+import { useState, useRef, useEffect, type ReactNode, forwardRef } from 'react';
 import { Box } from '@mui/system';
-import { useState, useRef, useEffect, ReactNode, forwardRef } from 'react';
 
 interface SpeedyCirclesProps {
   children?: ReactNode;
@@ -8,7 +8,7 @@ interface SpeedyCirclesProps {
 const SpeedyCircles = ({ children }: SpeedyCirclesProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const animationsRef = useRef<Animation[]>([]);
-  const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const circleRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   const normalSpeed = 1;
   const fastSpeed = 30;
@@ -16,16 +16,14 @@ const SpeedyCircles = ({ children }: SpeedyCirclesProps) => {
   const slowAdjustment = 0.7;
 
   const adjustPlaybackRate = (targetRate: number, adjustmentSpeed: number) => {
-    let currentRate =
-      animationsRef.current.length > 0
-        ? animationsRef.current[0].playbackRate
-        : normalSpeed;
+    let currentRate = animationsRef.current.length > 0 ? animationsRef.current[0].playbackRate : normalSpeed;
 
     const animate = () => {
       if (Math.abs(currentRate - targetRate) <= adjustmentSpeed) {
         animationsRef.current.forEach((animation) => {
           animation.playbackRate = targetRate;
         });
+
         return;
       }
 
@@ -67,8 +65,8 @@ const SpeedyCircles = ({ children }: SpeedyCirclesProps) => {
 
       const animation = circle.animate(keyframes, {
         duration: (6 + 0.5 * index) * 1000,
-        iterations: Infinity,
-        easing: 'linear'
+        iterations: Number.POSITIVE_INFINITY,
+        easing: 'linear',
       });
 
       animations.push(animation);
@@ -77,7 +75,9 @@ const SpeedyCircles = ({ children }: SpeedyCirclesProps) => {
     animationsRef.current = animations;
 
     return () => {
-      animations.forEach((animation) => animation.cancel());
+      animations.forEach((animation) => {
+        animation.cancel();
+      });
     };
   }, []);
 
@@ -86,7 +86,7 @@ const SpeedyCircles = ({ children }: SpeedyCirclesProps) => {
       sx={{
         height: '100%',
         width: '100%',
-        position: 'relative'
+        position: 'relative',
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -97,7 +97,7 @@ const SpeedyCircles = ({ children }: SpeedyCirclesProps) => {
           top: 0,
           left: 0,
           height: '100%',
-          width: '100%'
+          width: '100%',
         }}
       >
         <CircleAnimation
@@ -138,7 +138,7 @@ const SpeedyCircles = ({ children }: SpeedyCirclesProps) => {
             height: '100%',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           {children}
@@ -155,56 +155,54 @@ interface CircleAnimationProps {
   isHovered: boolean;
 }
 
-const CircleAnimation = forwardRef<HTMLDivElement, CircleAnimationProps>(
-  ({ width, height, index, isHovered }, ref) => {
-    return (
-      <Box
-        ref={ref}
-        className="animation-circle"
-        sx={{
-          width,
-          height,
-          top: `calc(50% - ${height / 2}px)`,
-          left: `calc(50% - ${width / 2}px)`,
+const CircleAnimation = forwardRef<HTMLDivElement, CircleAnimationProps>(({ width, height, index, isHovered }, ref) => {
+  return (
+    <Box
+      ref={ref}
+      className="animation-circle"
+      sx={{
+        width,
+        height,
+        top: `calc(50% - ${height / 2}px)`,
+        left: `calc(50% - ${width / 2}px)`,
+        position: 'absolute',
+        borderRadius: '50%',
+        background: 'rgba(255,255,255,.005)',
+        boxShadow: 'inset 0 -16px 32px #ffffff0a',
+        transition: 'transform cubic-bezier(.6,.6,0,1)',
+        transitionDuration: `${0.35 + index * 0.1}s`,
+        '&:before': {
+          content: '""',
+          left: 0,
+          top: 0,
           position: 'absolute',
-          borderRadius: '50%',
-          background: 'rgba(255,255,255,.005)',
-          boxShadow: 'inset 0 -16px 32px #ffffff0a',
-          transition: 'transform cubic-bezier(.6,.6,0,1)',
-          transitionDuration: 0.35 + index * 0.1 + 's',
-          '&:before': {
-            content: '""',
-            left: 0,
-            top: 0,
-            position: 'absolute',
-            width: 'calc(100% - 2px)',
-            height: 'calc(100% - 2px)',
-            border: '1px solid rgba(255, 255, 255, .05)',
-            borderRadius: 'inherit'
-          },
-          '&:after': {
-            content: '""',
+          width: 'calc(100% - 2px)',
+          height: 'calc(100% - 2px)',
+          border: '1px solid rgba(255, 255, 255, .05)',
+          borderRadius: 'inherit',
+        },
+        '&:after': {
+          content: '""',
+          background:
+            'conic-gradient(from 360deg at 50% 50%, #FFF 0deg, rgba(255, 255, 255, 1) 45deg, rgba(255, 255, 255, 0) 133deg)',
+          borderRadius: 'inherit',
+          position: 'absolute',
+          inset: 0,
+          padding: '1px',
+          mask: 'linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)',
+          maskComposite: 'exclude',
+          ...(index % 2 === 1 && {
             background:
-              'conic-gradient(from 360deg at 50% 50%, #FFF 0deg, rgba(255, 255, 255, 1) 45deg, rgba(255, 255, 255, 0) 133deg)',
-            borderRadius: 'inherit',
-            position: 'absolute',
-            inset: 0,
-            padding: '1px',
-            mask: 'linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)',
-            maskComposite: 'exclude',
-            ...(index % 2 === 1 && {
-              background:
-                'conic-gradient(from 360deg at 50% 50%, rgba(255, 255, 255, 0) 0deg, rgba(255, 255, 255, 0) 280deg, rgba(255, 255, 255, 1) 324deg)'
-            })
-          },
-          ...(isHovered && {
-            transform: 'scale(1.1)'
-          })
-        }}
-      />
-    );
-  }
-);
+              'conic-gradient(from 360deg at 50% 50%, rgba(255, 255, 255, 0) 0deg, rgba(255, 255, 255, 0) 280deg, rgba(255, 255, 255, 1) 324deg)',
+          }),
+        },
+        ...(isHovered && {
+          transform: 'scale(1.1)',
+        }),
+      }}
+    />
+  );
+});
 
 CircleAnimation.displayName = 'CircleAnimation';
 

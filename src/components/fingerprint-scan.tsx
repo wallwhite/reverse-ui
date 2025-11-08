@@ -14,14 +14,21 @@ const FingerprintScan = ({ duration = 3, onComplete }: FingerprintScanProps) => 
     const animation = animate(progress, 1, {
       duration,
       ease: 'linear',
-      onComplete
+      onComplete,
     });
 
     const handleEnd = () => {
       animation.stop();
       animate(progress, 0, {
-        duration: 0.35
-      });
+        duration: 0.35,
+      }).then(
+        () => {
+          // Animation complete
+        },
+        () => {
+          // Animation error, ignore
+        },
+      );
     };
 
     window.addEventListener('mouseup', handleEnd, { once: true });
@@ -40,14 +47,16 @@ const FingerprintScan = ({ duration = 3, onComplete }: FingerprintScanProps) => 
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
-          touchAction: 'none'
+          touchAction: 'none',
         }}
       >
         <Box
           component={motion.svg}
           onMouseDown={handleStart}
           onTouchStart={handleStart}
-          onTouchMove={(e) => e.preventDefault()}
+          onTouchMove={(e) => {
+            e.preventDefault();
+          }}
           width="120px"
           height="120px"
           fill="none"
@@ -58,7 +67,7 @@ const FingerprintScan = ({ duration = 3, onComplete }: FingerprintScanProps) => 
             WebkitTapHighlightColor: 'transparent',
             WebkitTouchCallout: 'none',
             WebkitUserSelect: 'none',
-            userSelect: 'none'
+            userSelect: 'none',
           }}
         >
           <path
@@ -81,15 +90,14 @@ const FingerprintScan = ({ duration = 3, onComplete }: FingerprintScanProps) => 
           sx={{
             position: 'absolute',
             borderRadius: 'inherit',
-            boxShadow:
-              '0 0 30px rgba(70, 219, 249,0.4),0 0 100px rgba(72, 185, 208, 0.5)',
+            boxShadow: '0 0 30px rgba(70, 219, 249,0.4),0 0 100px rgba(72, 185, 208, 0.5)',
             background:
               'radial-gradient(50% 50% at 50% 50%,rgba(0,0,0,0) 85%,rgba(81, 147, 160,.18) 96%,hsla(0,0%,100%,.8) 98%,rgba(70, 219, 249,.2) 100%),rgba(70, 219, 249,.15)',
             top: 0,
             left: 0,
             width: '100%',
             height: '100%',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
           }}
         />
       </Box>

@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { Box } from '@mui/system';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 interface NavigationIndicatorProps {
   items?: string[];
@@ -23,7 +23,7 @@ const NavigationIndicator = ({ items = [], activeIndex = null, onClick }: Naviga
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
       }}
     >
       {items.map((item, index) => (
@@ -32,30 +32,36 @@ const NavigationIndicator = ({ items = [], activeIndex = null, onClick }: Naviga
           sx={{
             padding: '4px 0',
             cursor: 'pointer',
-            position: 'relative'
+            position: 'relative',
           }}
-          onMouseEnter={() => setHoverIndex(index)}
-          onMouseLeave={() => setHoverIndex(null)}
-          onClick={() => handleClick(index)}
+          onMouseEnter={() => {
+            setHoverIndex(index);
+          }}
+          onMouseLeave={() => {
+            setHoverIndex(null);
+          }}
+          onClick={() => {
+            handleClick(index);
+          }}
         >
           <Box
             component={motion.div}
             initial={{
-              scale: 0.4
+              scale: 0.4,
             }}
             animate={{
-              scale: animate(index)
+              scale: animate(index),
             }}
             transition={{
               type: 'spring',
               stiffness: 200,
-              damping: 15
+              damping: 15,
             }}
             sx={{
               width: 38,
               height: 4,
               backgroundColor: activeIndex === index ? '#ffb224' : '#a0a0a0',
-              borderRadius: '4px'
+              borderRadius: '4px',
             }}
           />
           {hoverIndex === index ? (
@@ -64,16 +70,16 @@ const NavigationIndicator = ({ items = [], activeIndex = null, onClick }: Naviga
               initial={{
                 opacity: 0,
                 scale: 0.4,
-                filter: 'blur(5px)'
+                filter: 'blur(5px)',
               }}
               animate={{
                 opacity: 1,
                 scale: 1,
-                filter: 'blur(0px)'
+                filter: 'blur(0px)',
               }}
               transition={{
                 duration: 0.15,
-                delay: 0.0875
+                delay: 0.0875,
               }}
               sx={{
                 fontSize: 11,
@@ -81,7 +87,7 @@ const NavigationIndicator = ({ items = [], activeIndex = null, onClick }: Naviga
                 position: 'absolute',
                 left: 44,
                 top: -2,
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
               }}
             >
               {item}

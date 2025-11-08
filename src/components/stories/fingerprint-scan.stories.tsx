@@ -30,9 +30,7 @@ export const Default: Story = {
   decorators: [
     (Story) => (
       <div style={{ background: '#161616', padding: '40px' }}>
-        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
-          Click and hold to scan
-        </p>
+        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>Click and hold to scan</p>
         <Story />
       </div>
     ),
@@ -46,9 +44,7 @@ export const FastScan: Story = {
   decorators: [
     (Story) => (
       <div style={{ background: '#161616', padding: '40px' }}>
-        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
-          Quick scan (1.5s)
-        </p>
+        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>Quick scan (1.5s)</p>
         <Story />
       </div>
     ),
@@ -62,9 +58,7 @@ export const SlowScan: Story = {
   decorators: [
     (Story) => (
       <div style={{ background: '#161616', padding: '40px' }}>
-        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
-          Slow scan (6s)
-        </p>
+        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>Slow scan (6s)</p>
         <Story />
       </div>
     ),

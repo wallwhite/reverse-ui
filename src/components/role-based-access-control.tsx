@@ -1,6 +1,6 @@
-import { Box, SxProps } from '@mui/system';
-import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { Box } from '@mui/system';
+import { motion } from 'framer-motion';
 
 const RoleBasedAccessControl: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState(false);

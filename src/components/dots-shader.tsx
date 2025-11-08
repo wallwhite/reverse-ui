@@ -1,36 +1,36 @@
 import { useEffect, useMemo, useRef } from 'react';
 
-const createShader = (
-  gl: WebGL2RenderingContext,
-  type: number,
-  source: string
-): WebGLShader | null => {
+const createShader = (gl: WebGL2RenderingContext, type: number, source: string): WebGLShader | null => {
   const shader = gl.createShader(type);
+
   if (!shader) {
     console.error('Failed to create shader');
+
     return null;
   }
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    console.error('Failed to create shader: ' + gl.getShaderInfoLog(shader));
+    console.error(`Failed to create shader: ${gl.getShaderInfoLog(shader)}`);
     gl.deleteShader(shader);
+
     return null;
   }
+
   return shader;
 };
 
 const createBuffer = (
   gl: WebGL2RenderingContext,
-  arr: Float32Array | Uint16Array | Uint32Array
+  arr: Float32Array | Uint16Array | Uint32Array,
 ): WebGLBuffer | null => {
   const buffer = gl.createBuffer();
   const bufferType =
-    arr instanceof Uint16Array || arr instanceof Uint32Array
-      ? gl.ELEMENT_ARRAY_BUFFER
-      : gl.ARRAY_BUFFER;
+    arr instanceof Uint16Array || arr instanceof Uint32Array ? gl.ELEMENT_ARRAY_BUFFER : gl.ARRAY_BUFFER;
+
   gl.bindBuffer(bufferType, buffer);
   gl.bufferData(bufferType, arr, gl.STATIC_DRAW);
+
   return buffer;
 };
 
@@ -46,7 +46,7 @@ opacity *= intro_progress;
 `,
   static: `
 // No intro animation - static display
-`
+`,
 };
 
 type UniformValue = number | number[] | number[][];
@@ -56,9 +56,7 @@ interface Uniform {
   type: 'uniform1f' | 'uniform3f' | 'uniform1fv' | 'uniform3fv';
 }
 
-interface Uniforms {
-  [key: string]: Uniform;
-}
+type Uniforms = Record<string, Uniform>;
 
 interface DotsShaderProps {
   colors?: number[][];
@@ -83,11 +81,11 @@ const DotsShader = ({
   height = 500,
   introAnimation = 'wave',
   animationRepeat = 'once',
-  animationDuration = 2.0
+  animationDuration = 2,
 }: DotsShaderProps) => {
   const source = ANIMATION_SOURCES[introAnimation];
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const center = ['x', 'y'];
+  const center = new Set(['x', 'y']);
 
   const fragmentSource = `#version 300 es
     precision mediump float;
@@ -117,8 +115,8 @@ const DotsShader = ({
     void main() {
       vec2 st = fragCoord.xy;
 
-    ${center.includes('x') ? 'st.x -= abs(floor((mod(u_resolution.x, u_total_size) - u_dot_size) * 0.5));' : ''}
-  ${center.includes('y') ? 'st.y -= abs(floor((mod(u_resolution.y, u_total_size) - u_dot_size) * 0.5));' : ''}
+    ${center.has('x') ? 'st.x -= abs(floor((mod(u_resolution.x, u_total_size) - u_dot_size) * 0.5));' : ''}
+  ${center.has('y') ? 'st.y -= abs(floor((mod(u_resolution.y, u_total_size) - u_dot_size) * 0.5));' : ''}
 
   float opacity = step(0.0, st.x);
   opacity *= step(0.0, st.y);
@@ -146,7 +144,7 @@ const DotsShader = ({
 `;
 
   const uniforms: Uniforms = useMemo(() => {
-    const e =
+    const expandedColors =
       colors.length === 2
         ? [colors[0], colors[0], colors[0], colors[1], colors[1], colors[1]]
         : colors.length === 3
@@ -155,31 +153,32 @@ const DotsShader = ({
 
     return {
       u_colors: {
-        value: e.map((e) => [e[0] / 255, e[1] / 255, e[2] / 255]),
-        type: 'uniform3fv'
+        value: expandedColors.map((color) => [color[0] / 255, color[1] / 255, color[2] / 255]),
+        type: 'uniform3fv',
       },
       u_opacities: {
         value: opacities,
-        type: 'uniform1fv'
+        type: 'uniform1fv',
       },
       u_total_size: {
         value: totalSize,
-        type: 'uniform1f'
+        type: 'uniform1f',
       },
       u_dot_size: {
         value: dotSize,
-        type: 'uniform1f'
+        type: 'uniform1f',
       },
       u_animation_duration: {
         value: animationDuration,
-        type: 'uniform1f'
-      }
+        type: 'uniform1f',
+      },
     };
   }, [colors, opacities, totalSize, dotSize, animationDuration]);
 
   useEffect(() => {
     const windowDpr = window.devicePixelRatio;
     const canvas = canvasRef.current;
+
     if (!canvas) return;
 
     const glCanvas = document.createElement('canvas');
@@ -216,7 +215,7 @@ const DotsShader = ({
         fragCoord = (coordinates + 1.0) * 0.5 * u_resolution;
         fragCoord.y = u_resolution.y - fragCoord.y;
       }
-      `
+      `,
     );
 
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
@@ -226,6 +225,7 @@ const DotsShader = ({
     }
 
     const glProgram = gl.createProgram();
+
     if (!glProgram) return;
 
     gl.attachShader(glProgram, vertexShader);
@@ -242,6 +242,7 @@ const DotsShader = ({
     const positionsBuffer = createBuffer(gl, positions);
 
     const coordinatesAttrLocation = gl.getAttribLocation(glProgram, 'coordinates');
+
     gl.enableVertexAttribArray(coordinatesAttrLocation);
     gl.vertexAttribPointer(coordinatesAttrLocation, 2, gl.FLOAT, false, 0, 0);
 
@@ -252,22 +253,34 @@ const DotsShader = ({
     const scrollAttrLocation = gl.getUniformLocation(glProgram, 'u_scroll');
 
     for (const key in uniforms) {
+      if (!Object.prototype.hasOwnProperty.call(uniforms, key)) {
+        continue;
+      }
+
       const uniformLocation = gl.getUniformLocation(glProgram, key);
       const uniform = uniforms[key];
 
       switch (uniform.type) {
-        case 'uniform1f':
+        case 'uniform1f': {
           gl.uniform1f(uniformLocation, uniform.value as number);
           break;
-        case 'uniform3f':
+        }
+        case 'uniform3f': {
           gl.uniform3f(uniformLocation, ...(uniform.value as [number, number, number]));
           break;
-        case 'uniform1fv':
+        }
+        case 'uniform1fv': {
           gl.uniform1fv(uniformLocation, uniform.value as number[]);
           break;
-        case 'uniform3fv':
+        }
+        case 'uniform3fv': {
           gl.uniform3fv(uniformLocation, (uniform.value as number[][]).flat());
           break;
+        }
+        default: {
+          // Unknown uniform type, skip
+          break;
+        }
       }
     }
 
@@ -285,13 +298,15 @@ const DotsShader = ({
       }
 
       const secondsPassed = e / 1e3;
+
       if (lastSecondPassed === null) {
         lastSecondPassed = secondsPassed;
       }
 
-      if (maxFps !== Infinity) {
+      if (maxFps !== Number.POSITIVE_INFINITY) {
         if (e - timePassed < 1000 / maxFps) {
           raf = window.requestAnimationFrame(run);
+
           return;
         }
         timePassed = e;
@@ -301,7 +316,7 @@ const DotsShader = ({
 
       // Calculate intro_time and fade_multiplier based on animation repeat mode
       let introTime = time;
-      let fadeMultiplier = 1.0;
+      let fadeMultiplier = 1;
 
       if (animationRepeat === 'once') {
         introTime = Math.min(time, animationDuration);
@@ -316,20 +331,21 @@ const DotsShader = ({
         if (cycleTime < animationDuration) {
           // Phase 1: Intro animation
           introTime = cycleTime;
-          fadeMultiplier = 1.0;
+          fadeMultiplier = 1;
         } else if (cycleTime < animationDuration + holdTime) {
           // Phase 2: Hold at full opacity
           introTime = animationDuration;
-          fadeMultiplier = 1.0;
+          fadeMultiplier = 1;
         } else if (cycleTime < animationDuration + holdTime + fadeOutTime) {
           // Phase 3: Fade out
           introTime = animationDuration;
           const fadeProgress = (cycleTime - animationDuration - holdTime) / fadeOutTime;
-          fadeMultiplier = 1.0 - fadeProgress;
+
+          fadeMultiplier = 1 - fadeProgress;
         } else {
           // Phase 4: Pause (fully transparent)
           introTime = 0;
-          fadeMultiplier = 0.0;
+          fadeMultiplier = 0;
         }
       }
 
@@ -345,7 +361,7 @@ const DotsShader = ({
       ctx2d.drawImage(glCanvas, 0, 0);
 
       raf = window.requestAnimationFrame(run);
-    }
+    };
 
     raf = window.requestAnimationFrame(run);
 

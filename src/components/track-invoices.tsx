@@ -1,6 +1,6 @@
+import { useEffect, useRef } from 'react';
 import { Box } from '@mui/system';
 import { motion, useAnimation } from 'framer-motion';
-import { useEffect, useRef } from 'react';
 
 const INVOICE_COUNT = 3;
 
@@ -52,27 +52,37 @@ const Invoice: React.FC<InvoiceProps> = ({ index, logo, count, title }) => {
   useEffect(() => {
     isMounted.current = true;
 
+    const Y_STEP = 24;
+    const Z_STEP = 20;
+    const DURATION_FADE = 2 / 3;
+    const DURATION_APPEAR = 1 / 3;
+    const DURATION_MOVE = 1;
+    const DELAY_BETWEEN_MOVES = 1000;
+
     const animate = async () => {
       while (isMounted.current) {
         for (let i = 0; i < count; i++) {
-          if (!isMounted.current) break;
+          if (!isMounted.current) {
+            break;
+          }
 
           const currentPosition = (index + i) % count;
           const nextPosition = (index + i + 1) % count;
 
-          const currentY = 24 * currentPosition;
-          const nextY = 24 * nextPosition;
-          const currentZ = 20 * currentPosition;
-          const nextZ = 20 * nextPosition;
+          const currentY = Y_STEP * currentPosition;
+          const nextY = Y_STEP * nextPosition;
+          const currentZ = Z_STEP * currentPosition;
+          const nextZ = Z_STEP * nextPosition;
 
           if (nextPosition === 0) {
+            // eslint-disable-next-line no-await-in-loop
             await controls.start({
-              y: [currentY, 24 * count],
-              z: [currentZ, 20 * count],
+              y: [currentY, Y_STEP * count],
+              z: [currentZ, Z_STEP * count],
               opacity: [1, 0],
               zIndex: currentPosition + 1,
               transition: {
-                duration: 2 / 3,
+                duration: DURATION_FADE,
                 ease: 'easeInOut',
               },
             });
@@ -84,31 +94,38 @@ const Invoice: React.FC<InvoiceProps> = ({ index, logo, count, title }) => {
               zIndex: nextPosition,
             });
 
+            // eslint-disable-next-line no-await-in-loop
             await controls.start({
               opacity: 1,
               transition: {
-                duration: 1 / 3,
+                duration: DURATION_APPEAR,
                 ease: 'easeOut',
               },
             });
           } else {
+            // eslint-disable-next-line no-await-in-loop
             await controls.start({
               y: [currentY, nextY],
               z: [currentZ, nextZ],
               zIndex: nextPosition,
               transition: {
-                duration: 1,
+                duration: DURATION_MOVE,
                 ease: 'easeInOut',
               },
             });
           }
 
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          // eslint-disable-next-line no-await-in-loop
+          await new Promise((resolve) => {
+            setTimeout(resolve, DELAY_BETWEEN_MOVES);
+          });
         }
       }
     };
 
-    animate();
+    animate().catch(() => {
+      // Animation error, ignore
+    });
 
     return () => {
       isMounted.current = false;
@@ -122,7 +139,7 @@ const Invoice: React.FC<InvoiceProps> = ({ index, logo, count, title }) => {
       component={motion.div}
       animate={controls}
       transition={{
-        repeat: Infinity,
+        repeat: Number.POSITIVE_INFINITY,
         repeatDelay: 1,
       }}
       sx={{
@@ -332,7 +349,7 @@ const Invoice: React.FC<InvoiceProps> = ({ index, logo, count, title }) => {
               sx={{
                 display: 'flex',
                 py: '12px',
-                borderBottom: i == 1 ? undefined : '1px solid rgba(255, 255, 255, 0.08)',
+                borderBottom: i === 1 ? 'none' : '1px solid rgba(255, 255, 255, 0.08)',
               }}
             >
               <Box

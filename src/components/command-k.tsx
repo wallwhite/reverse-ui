@@ -1,5 +1,5 @@
-import { Box, SxProps } from '@mui/system';
-import { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
+import { Box, type SxProps } from '@mui/system';
 
 interface Command {
   name: string;
@@ -19,12 +19,12 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 440
+        height: 440,
       }}
     >
       <Box
         sx={{
-          position: 'relative'
+          position: 'relative',
         }}
       >
         <Box
@@ -32,14 +32,14 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
             position: 'absolute',
             top: -25,
             left: 10,
-            transform: 'rotate(-40deg)'
+            transform: 'rotate(-40deg)',
           }}
         >
           <KeyboardKey
             sx={{
               alignItems: 'flex-end',
               width: 100,
-              fontSize: 12
+              fontSize: 12,
             }}
           >
             <Box>⌘</Box>
@@ -53,14 +53,14 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
             zIndex: 2,
             transform: 'rotate(15deg)',
             right: 30,
-            background: 'rgb(22 22 22)'
+            background: 'rgb(22 22 22)',
           }}
         >
           <KeyboardKey
             sx={{
               fontSize: 12,
               height: 36,
-              width: 36
+              width: 36,
             }}
           >
             K
@@ -86,13 +86,13 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
               left: 0,
               width: '100%',
               height: '100%',
-              borderRadius: 'inherit'
-            }
+              borderRadius: 'inherit',
+            },
           }}
         >
           <Box
             sx={{
-              padding: '6px'
+              padding: '6px',
             }}
           >
             <Box
@@ -103,7 +103,7 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
                 padding: '3px 8px',
                 fontWeight: 400,
                 fontSize: 12,
-                display: 'inline-block'
+                display: 'inline-block',
               }}
             >
               Actions
@@ -113,7 +113,9 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
             component="input"
             type="text"
             placeholder="Type a command or search..."
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
             sx={{
               padding: '12px 8px',
               backgroundColor: 'transparent',
@@ -123,8 +125,8 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
               color: 'rgba(255, 255, 255, 0.65)',
               borderBottom: '1px solid rgba(255,255,255,.08)',
               '::placeholder': {
-                color: 'rgba(255, 255, 255, 0.5)'
-              }
+                color: 'rgba(255, 255, 255, 0.5)',
+              },
             }}
           />
           <Box
@@ -133,7 +135,7 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
               display: 'flex',
               flexDirection: 'column',
               flex: '1 1 100%',
-              overflowY: 'auto'
+              overflowY: 'auto',
             }}
           >
             {Object.entries(commands).map(([category, categoryCommands]) => (
@@ -150,24 +152,16 @@ const CommandK = ({ commands = {} }: CommandKProps) => {
                     ...(!!searchQuery && {
                       height: 0,
                       opacity: 0,
-                      pointerEvents: 'none'
-                    })
+                      pointerEvents: 'none',
+                    }),
                   }}
                 >
                   {category}
                 </Box>
                 {categoryCommands.map((command, i) => {
-                  const isMatch = command.name
-                    .toLocaleLowerCase()
-                    .includes(searchQuery.toLocaleLowerCase());
-                  return (
-                    <CommandItem
-                      key={category + i}
-                      icon={command.icon}
-                      title={command.name}
-                      isActive={isMatch}
-                    />
-                  );
+                  const isMatch = command.name.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase());
+
+                  return <CommandItem key={category + i} icon={command.icon} title={command.name} isActive={isMatch} />;
                 })}
               </Box>
             ))}
@@ -200,22 +194,22 @@ const CommandItem = ({ title, icon, isActive }: CommandItemProps) => {
         borderRadius: '8px',
         cursor: 'pointer',
         '&:hover': {
-          background: 'rgba(255, 255, 255, 0.06)'
+          background: 'rgba(255, 255, 255, 0.06)',
         },
         svg: {
           color: 'inherit',
           width: 16,
-          height: 16
+          height: 16,
         },
         img: {
           width: 16,
-          height: 'auto'
+          height: 'auto',
         },
         ...(!isActive && {
           opacity: 0,
           height: 0,
-          pointerEvents: 'none'
-        })
+          pointerEvents: 'none',
+        }),
       }}
     >
       {typeof icon === 'string' ? <img src={icon} /> : icon}
@@ -257,7 +251,7 @@ const KeyboardKey = ({ sx, children }: KeyboardKeyProps) => {
           width: 'calc(100% - 2px)',
           height: 'calc(100% - 2px)',
           pointerEvents: 'none',
-          borderRadius: 'inherit'
+          borderRadius: 'inherit',
         },
         '&:after': {
           position: 'absolute',
@@ -268,9 +262,9 @@ const KeyboardKey = ({ sx, children }: KeyboardKeyProps) => {
           height: '100%',
           pointerEvents: 'none',
           borderRadius: 'inherit',
-          background: 'linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.08) 100%)'
+          background: 'linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.08) 100%)',
         },
-        ...sx
+        ...sx,
       }}
     >
       {children}

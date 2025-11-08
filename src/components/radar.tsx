@@ -1,6 +1,43 @@
 import { Box } from '@mui/system';
 import { motion } from 'framer-motion';
 
+interface RadialCircleProps {
+  index: number;
+}
+
+const RadialCircle: React.FC<RadialCircleProps> = ({ index }) => {
+  return (
+    <Box
+      component={motion.div}
+      initial={{
+        opacity: 0.5,
+        filter: 'saturate(10%)',
+      }}
+      animate={{
+        filter: ['saturate(10%)', 'saturate(100%)', 'saturate(10%)'],
+        opacity: [0.5, 1, 0.5],
+      }}
+      transition={{
+        duration: 3,
+        repeatDelay: 2,
+        delay: 0.1 * index,
+        repeat: Number.POSITIVE_INFINITY,
+        times: [0, 0.25, 1],
+      }}
+      sx={{
+        border: '1px solid rgba(120, 123, 255, .35)',
+        borderRadius: '999px',
+        position: 'absolute',
+        bottom: -8,
+        left: '50%',
+        transform: 'translateX(-50%) translateY(50%) translateZ(0px)',
+        aspectRatio: '1/1',
+        width: (index + 1) * 40 + 20 * index,
+      }}
+    />
+  );
+};
+
 const Radar: React.FC = () => {
   return (
     <Box
@@ -24,7 +61,7 @@ const Radar: React.FC = () => {
           height: '100%',
         }}
       >
-        {[...Array(10)].map((_, i) => (
+        {Array.from({ length: 10 }).map((_, i) => (
           <RadialCircle key={i} index={i} />
         ))}
       </Box>
@@ -41,11 +78,11 @@ const Radar: React.FC = () => {
         transition={{
           ease: 'linear',
           duration: 3,
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           repeatDelay: 2,
           opacity: {
             times: [0, 0.25, 0.75, 1],
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             ease: 'linear',
             repeatDelay: 2,
             duration: 3,
@@ -97,7 +134,7 @@ const Radar: React.FC = () => {
           }}
           transition={{
             duration: 3,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             repeatDelay: 2,
             times: [0, 0.1, 1],
           }}
@@ -122,7 +159,7 @@ const Radar: React.FC = () => {
           }}
           transition={{
             duration: 3,
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             repeatDelay: 2,
             times: [0, 0.25, 1],
           }}
@@ -137,43 +174,6 @@ const Radar: React.FC = () => {
         />
       </Box>
     </Box>
-  );
-};
-
-interface RadialCircleProps {
-  index: number;
-}
-
-const RadialCircle: React.FC<RadialCircleProps> = ({ index }) => {
-  return (
-    <Box
-      component={motion.div}
-      initial={{
-        opacity: 0.5,
-        filter: 'saturate(10%)',
-      }}
-      animate={{
-        filter: ['saturate(10%)', 'saturate(100%)', 'saturate(10%)'],
-        opacity: [0.5, 1, 0.5],
-      }}
-      transition={{
-        duration: 3,
-        repeatDelay: 2,
-        delay: 0.1 * index,
-        repeat: Infinity,
-        times: [0, 0.25, 1],
-      }}
-      sx={{
-        border: '1px solid rgba(120, 123, 255, .35)',
-        borderRadius: '999px',
-        position: 'absolute',
-        bottom: -8,
-        left: '50%',
-        transform: 'translateX(-50%) translateY(50%) translateZ(0px)',
-        aspectRatio: '1/1',
-        width: (index + 1) * 40 + 20 * index,
-      }}
-    />
   );
 };
 

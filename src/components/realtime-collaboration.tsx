@@ -1,6 +1,6 @@
+import { useRef, useState } from 'react';
 import { Box, keyframes } from '@mui/system';
 import { motion } from 'framer-motion';
-import { useRef, useState } from 'react';
 
 const RealtimeCollaboration: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);

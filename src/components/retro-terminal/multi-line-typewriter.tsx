@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { TypeWritter } from '../type-writter';
 import { TypingCursor } from './typing-cursor';
 

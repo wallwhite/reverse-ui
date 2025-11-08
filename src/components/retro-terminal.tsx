@@ -47,7 +47,8 @@ const RetroTerminal: React.FC = () => {
           textShadow: '0 0 4px #008f11',
           color: '#00ff41',
           fontWeight: 500,
-          background: 'radial-gradient(62.5% 62.5% at 50% 100%, rgb(10 114 68 / 60%) 0, rgba(170, 138, 255, 0) 100%), #05321e',
+          background:
+            'radial-gradient(62.5% 62.5% at 50% 100%, rgb(10 114 68 / 60%) 0, rgba(170, 138, 255, 0) 100%), #05321e',
           boxShadow:
             '0 -1px 0 rgb(53 237 50 / 30%), 0 3px 1px hsla(0, 0%, 0%, .08), inset 0 -1px 0 rgba(109, 228, 116, .24), inset 0 0 12px #000, inset 0 0 1px rgba(0, 0, 0, .85), inset 0 0 15px rgb(255 255 255 / 36%)',
           '&:before': {

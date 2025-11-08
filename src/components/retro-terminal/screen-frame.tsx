@@ -96,13 +96,23 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="-2" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.13 0" />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_3" />
           <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2_3" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feGaussianBlur stdDeviation="1.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -119,13 +129,23 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="-2" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.13 0" />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_3" />
           <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2_3" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feGaussianBlur stdDeviation="1.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -142,13 +162,23 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="-2" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.13 0" />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_3" />
           <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2_3" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feGaussianBlur stdDeviation="1.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -165,18 +195,33 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.1 0" />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_3" />
           <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2_3" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.1 0" />
           <feBlend mode="normal" in2="shape" result="effect2_innerShadow_2_3" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset />
           <feGaussianBlur stdDeviation="3.65" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -193,12 +238,22 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 0.442177 0 0 0 0 0.437061 0 0 0 0 0.467757 0 0 0 1 0" />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_3" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.63 0" />
@@ -216,7 +271,12 @@ const ScreenFrame: React.FC = () => {
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="0.5" />
           <feGaussianBlur stdDeviation="0.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -233,7 +293,12 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.12 0" />
@@ -251,7 +316,12 @@ const ScreenFrame: React.FC = () => {
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="0.5" />
           <feGaussianBlur stdDeviation="0.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -268,7 +338,12 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.12 0" />
@@ -286,7 +361,12 @@ const ScreenFrame: React.FC = () => {
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="0.5" />
           <feGaussianBlur stdDeviation="0.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -303,7 +383,12 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.12 0" />
@@ -321,7 +406,12 @@ const ScreenFrame: React.FC = () => {
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="0.5" />
           <feGaussianBlur stdDeviation="0.5" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
@@ -338,14 +428,26 @@ const ScreenFrame: React.FC = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dy="1" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.12 0" />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_3" />
           <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2_3" result="shape" />
         </filter>
-        <linearGradient id="paint0_linear_2_3" x1="229" y1="-92.5" x2="226.615" y2="283.62" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="paint0_linear_2_3"
+          x1="229"
+          y1="-92.5"
+          x2="226.615"
+          y2="283.62"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#1F1E23" />
           <stop offset="1" stopColor="#161616" />
         </linearGradient>

@@ -1,6 +1,6 @@
+import { useEffect, useMemo, useState } from 'react';
 import { Box } from '@mui/system';
 import { useAnimate } from 'framer-motion';
-import { useEffect, useMemo, useState } from 'react';
 
 const WIDTH = 36;
 const HEIGHT = 44;
@@ -8,26 +8,22 @@ const GAP = 12;
 
 interface AnimationStep {
   target: string;
-  keyframes: Record<string, any>;
-  options: Record<string, any>;
+  keyframes: Record<string, unknown>;
+  options: Record<string, unknown>;
 }
 
 const MultifactorAuthentication: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
   const [scope, animate] = useAnimate();
 
-  const randomNumbers = useMemo(
-    () =>
-      Array.from({ length: 6 }, () => Math.floor(9 * Math.random() + 1)),
-    [isActive]
-  );
+  const randomNumbers = useMemo(() => Array.from({ length: 6 }, () => Math.floor(9 * Math.random() + 1)), [isActive]);
 
   useEffect(() => {
     setIsActive(true);
   }, [isActive]);
 
   const createAnimationStep = (index: number): AnimationStep[] => {
-    const translateX = (WIDTH + GAP) * (index + 1) + 'px';
+    const translateX = `${(WIDTH + GAP) * (index + 1)}px`;
 
     return [
       {
@@ -73,7 +69,7 @@ const MultifactorAuthentication: React.FC = () => {
       {
         duration: 0.3,
         delay: 0.5,
-      }
+      },
     );
 
     const cursorAnimation = animate(
@@ -87,7 +83,7 @@ const MultifactorAuthentication: React.FC = () => {
         delay: 0.4,
         duration: 0.3,
         ease: [0.675, 0, 0.375, 1],
-      }
+      },
     );
 
     await Promise.all([borderAnimation, cursorAnimation]);
@@ -101,13 +97,14 @@ const MultifactorAuthentication: React.FC = () => {
       {
         duration: 0.1,
         ease: [0.675, 0, 0.375, 1],
-      }
+      },
     );
 
     for (let i = 0; i < 5; i++) {
       const step = createAnimationStep(i);
-      for (let j = 0; j < step.length; j++) {
-        const animationStep = step[j];
+
+      for (const animationStep of step) {
+        // eslint-disable-next-line no-await-in-loop
         await animate(animationStep.target, animationStep.keyframes, animationStep.options);
       }
     }
@@ -120,7 +117,7 @@ const MultifactorAuthentication: React.FC = () => {
       },
       {
         duration: 0.2,
-      }
+      },
     );
 
     resetAnimation();
@@ -135,7 +132,7 @@ const MultifactorAuthentication: React.FC = () => {
       },
       {
         duration: 0,
-      }
+      },
     );
 
     animate(
@@ -146,11 +143,13 @@ const MultifactorAuthentication: React.FC = () => {
       },
       {
         duration: 0,
-      }
+      },
     );
 
     setIsActive(false);
-    setTimeout(() => setIsActive(true), 500);
+    setTimeout(() => {
+      setIsActive(true);
+    }, 500);
   };
 
   useEffect(() => {
@@ -250,7 +249,7 @@ const MultifactorAuthentication: React.FC = () => {
             >
               {isActive && (
                 <Box
-                  component='span'
+                  component="span"
                   sx={{
                     opacity: 0,
                     transform: 'scale(0.1)',

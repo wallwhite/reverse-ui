@@ -1,291 +1,6 @@
+import { type ReactNode, useEffect, useState } from 'react';
 import { Box } from '@mui/system';
-import { motion, Variants } from 'framer-motion';
-import { ReactNode, useEffect, useState } from 'react';
-
-interface BrowserMockupProps {
-  url?: string;
-  children?: ReactNode;
-}
-
-const BrowserMockup = ({ url = 'https://reverseui.com', children }: BrowserMockupProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  const containerVariants: Variants = {
-    hidden: {
-      height: 34,
-      opacity: 0
-    },
-    visible: {
-      height: 'auto',
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        when: 'beforeChildren',
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const toolbarVariants: Variants = {
-    hidden: {
-      width: 0,
-      opacity: 0
-    },
-    visible: {
-      width: 'auto',
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const contentVariants: Variants = {
-    hidden: {
-      height: 0,
-      opacity: 0
-    },
-    visible: {
-      height: 'auto',
-      opacity: 1,
-      transition: {
-        duration: 0.85,
-        ease: [0.65, 0, 0.35, 1]
-      }
-    }
-  };
-
-  const contentChildrenVariants: Variants = {
-    hidden: {
-      opacity: 0
-    },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.85,
-        delay: 0.85,
-        ease: [0.65, 0, 0.35, 1]
-      }
-    }
-  };
-
-  const iconVariants: Variants = {
-    hidden: {
-      scale: 0,
-      opacity: 0
-    },
-    visible: {
-      scale: 1,
-      opacity: 1
-    }
-  };
-
-  return (
-    <Box sx={{}}>
-      <motion.div
-        initial="hidden"
-        animate={isVisible ? 'visible' : 'hidden'}
-        variants={containerVariants}
-      >
-        <Box
-          sx={{
-            background: 'linear-gradient(270deg, rgb(24, 24, 24) 0%, rgb(23, 23, 23) 100%)',
-            borderRadius: '12px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            overflow: 'hidden',
-            padding: '0 6px 6px 6px'
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              padding: '6px'
-            }}
-          >
-            <motion.div
-              variants={toolbarVariants}
-              style={{
-                display: 'flex',
-                flex: '1 0 0',
-                alignItems: 'center',
-                gap: '12px'
-              }}
-            >
-              <motion.div
-                variants={toolbarVariants}
-                style={{
-                  display: 'flex',
-                  gap: '6px'
-                }}
-              >
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <motion.div
-                    key={index}
-                    variants={iconVariants}
-                    style={{
-                      width: 8.5,
-                      height: 8.5,
-                      borderRadius: '50%',
-                      background: 'rgba(255, 255, 255, 0.15)'
-                    }}
-                  />
-                ))}
-              </motion.div>
-              <motion.div
-                variants={toolbarVariants}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px'
-                }}
-              >
-                {[WindowIcon, ArrowLeft, ArrowRight, RefreshIcon].map((Icon, index) => (
-                  <Box
-                    key={index}
-                    component={motion.div}
-                    variants={iconVariants}
-                    sx={{
-                      display: 'flex',
-                      svg: {
-                        width: 14,
-                        fill: 'rgba(255, 255, 255, 0.6)'
-                      }
-                    }}
-                  >
-                    <Icon />
-                  </Box>
-                ))}
-              </motion.div>
-            </motion.div>
-            <Box
-              sx={{
-                flex: '1 0 0',
-                height: 22,
-                padding: '6px',
-                borderRadius: '6px',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}
-            >
-              <Box
-                component={motion.div}
-                variants={iconVariants}
-                sx={{
-                  display: 'flex',
-                  svg: {
-                    width: 12,
-                    fill: 'rgba(255, 255, 255, 0.6)'
-                  }
-                }}
-              >
-                <LockIcon />
-              </Box>
-              <motion.div
-                initial={{
-                  opacity: 0
-                }}
-                animate={{
-                  opacity: 1
-                }}
-                transition={{
-                  delay: 0.3
-                }}
-                style={{
-                  fontSize: 10,
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontWeight: 400
-                }}
-              >
-                {url}
-              </motion.div>
-              <Box
-                component={motion.div}
-                variants={iconVariants}
-                sx={{
-                  display: 'flex',
-                  svg: {
-                    width: 12,
-                    fill: 'rgba(255, 255, 255, 0.6)'
-                  }
-                }}
-              >
-                <LinkIcon />
-              </Box>
-            </Box>
-            <motion.div
-              variants={toolbarVariants}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                flex: '1 0 0',
-                justifyContent: 'flex-end'
-              }}
-            >
-              {[DownloadIcon, PlusIcon].map((Icon, index) => (
-                <Box
-                  key={index}
-                  component={motion.div}
-                  variants={iconVariants}
-                  sx={{
-                    display: 'flex',
-                    svg: {
-                      width: 14,
-                      fill: 'rgba(255, 255, 255, 0.6)'
-                    }
-                  }}
-                >
-                  <Icon />
-                </Box>
-              ))}
-            </motion.div>
-          </Box>
-          <motion.div
-            variants={contentVariants}
-            style={{
-              width: '100%',
-              borderRadius: '6px',
-              overflow: 'hidden',
-              display: 'flex',
-              position: 'relative'
-            }}
-          >
-            <motion.div
-              variants={contentChildrenVariants}
-              style={{
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                display: 'flex',
-                top: 0,
-                left: 0
-              }}
-            >
-              {children}
-            </motion.div>
-            <div
-              style={{
-                opacity: 0,
-                visibility: 'hidden',
-                width: '100%',
-                display: 'flex'
-              }}
-            >
-              {children}
-            </div>
-          </motion.div>
-        </Box>
-      </motion.div>
-    </Box>
-  );
-};
+import { motion, type Variants } from 'framer-motion';
 
 const WindowIcon = () => {
   return (
@@ -364,6 +79,287 @@ const PlusIcon = () => {
         <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z" />
       </g>
     </svg>
+  );
+};
+
+interface BrowserMockupProps {
+  url?: string;
+  children?: ReactNode;
+}
+
+const BrowserMockup = ({ url = 'https://reverseui.com', children }: BrowserMockupProps) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const containerVariants: Variants = {
+    hidden: {
+      height: 34,
+      opacity: 0,
+    },
+    visible: {
+      height: 'auto',
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        when: 'beforeChildren',
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const toolbarVariants: Variants = {
+    hidden: {
+      width: 0,
+      opacity: 0,
+    },
+    visible: {
+      width: 'auto',
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const contentVariants: Variants = {
+    hidden: {
+      height: 0,
+      opacity: 0,
+    },
+    visible: {
+      height: 'auto',
+      opacity: 1,
+      transition: {
+        duration: 0.85,
+        ease: [0.65, 0, 0.35, 1],
+      },
+    },
+  };
+
+  const contentChildrenVariants: Variants = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.85,
+        delay: 0.85,
+        ease: [0.65, 0, 0.35, 1],
+      },
+    },
+  };
+
+  const iconVariants: Variants = {
+    hidden: {
+      scale: 0,
+      opacity: 0,
+    },
+    visible: {
+      scale: 1,
+      opacity: 1,
+    },
+  };
+
+  return (
+    <Box sx={{}}>
+      <motion.div initial="hidden" animate={isVisible ? 'visible' : 'hidden'} variants={containerVariants}>
+        <Box
+          sx={{
+            background: 'linear-gradient(270deg, rgb(24, 24, 24) 0%, rgb(23, 23, 23) 100%)',
+            borderRadius: '12px',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            overflow: 'hidden',
+            padding: '0 6px 6px 6px',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              padding: '6px',
+            }}
+          >
+            <motion.div
+              variants={toolbarVariants}
+              style={{
+                display: 'flex',
+                flex: '1 0 0',
+                alignItems: 'center',
+                gap: '12px',
+              }}
+            >
+              <motion.div
+                variants={toolbarVariants}
+                style={{
+                  display: 'flex',
+                  gap: '6px',
+                }}
+              >
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <motion.div
+                    key={index}
+                    variants={iconVariants}
+                    style={{
+                      width: 8.5,
+                      height: 8.5,
+                      borderRadius: '50%',
+                      background: 'rgba(255, 255, 255, 0.15)',
+                    }}
+                  />
+                ))}
+              </motion.div>
+              <motion.div
+                variants={toolbarVariants}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                }}
+              >
+                {[WindowIcon, ArrowLeft, ArrowRight, RefreshIcon].map((Icon, index) => (
+                  <Box
+                    key={index}
+                    component={motion.div}
+                    variants={iconVariants}
+                    sx={{
+                      display: 'flex',
+                      svg: {
+                        width: 14,
+                        fill: 'rgba(255, 255, 255, 0.6)',
+                      },
+                    }}
+                  >
+                    <Icon />
+                  </Box>
+                ))}
+              </motion.div>
+            </motion.div>
+            <Box
+              sx={{
+                flex: '1 0 0',
+                height: 22,
+                padding: '6px',
+                borderRadius: '6px',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Box
+                component={motion.div}
+                variants={iconVariants}
+                sx={{
+                  display: 'flex',
+                  svg: {
+                    width: 12,
+                    fill: 'rgba(255, 255, 255, 0.6)',
+                  },
+                }}
+              >
+                <LockIcon />
+              </Box>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 0.3,
+                }}
+                style={{
+                  fontSize: 10,
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontWeight: 400,
+                }}
+              >
+                {url}
+              </motion.div>
+              <Box
+                component={motion.div}
+                variants={iconVariants}
+                sx={{
+                  display: 'flex',
+                  svg: {
+                    width: 12,
+                    fill: 'rgba(255, 255, 255, 0.6)',
+                  },
+                }}
+              >
+                <LinkIcon />
+              </Box>
+            </Box>
+            <motion.div
+              variants={toolbarVariants}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                flex: '1 0 0',
+                justifyContent: 'flex-end',
+              }}
+            >
+              {[DownloadIcon, PlusIcon].map((Icon, index) => (
+                <Box
+                  key={index}
+                  component={motion.div}
+                  variants={iconVariants}
+                  sx={{
+                    display: 'flex',
+                    svg: {
+                      width: 14,
+                      fill: 'rgba(255, 255, 255, 0.6)',
+                    },
+                  }}
+                >
+                  <Icon />
+                </Box>
+              ))}
+            </motion.div>
+          </Box>
+          <motion.div
+            variants={contentVariants}
+            style={{
+              width: '100%',
+              borderRadius: '6px',
+              overflow: 'hidden',
+              display: 'flex',
+              position: 'relative',
+            }}
+          >
+            <motion.div
+              variants={contentChildrenVariants}
+              style={{
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                display: 'flex',
+                top: 0,
+                left: 0,
+              }}
+            >
+              {children}
+            </motion.div>
+            <div
+              style={{
+                opacity: 0,
+                visibility: 'hidden',
+                width: '100%',
+                display: 'flex',
+              }}
+            >
+              {children}
+            </div>
+          </motion.div>
+        </Box>
+      </motion.div>
+    </Box>
   );
 };
 

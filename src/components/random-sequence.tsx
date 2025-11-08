@@ -1,22 +1,27 @@
+import { useEffect, useRef } from 'react';
 import { Box } from '@mui/system';
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
 
 const sequenceGenerator = (length: number): string => {
   let result = '';
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
+
   return result;
 };
 
 const updateRefText = (ref: HTMLDivElement | null, text: string): void => {
   if (!ref) return;
   const child = ref.firstChild;
-  child && !child.nextSibling && child.nodeType === Node.TEXT_NODE
-    ? ((child as Text).data = text)
-    : (ref.textContent = text);
+
+  if (child && !child.nextSibling && child.nodeType === Node.TEXT_NODE) {
+    (child as Text).data = text;
+  } else {
+    ref.textContent = text;
+  }
 };
 
 const RandomSequence = () => {
@@ -30,12 +35,12 @@ const RandomSequence = () => {
     backgroundClip: 'text',
     backgroundImage:
       'linear-gradient(to right, rgba(255, 255, 255, 0.1) calc(50% - 32px), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.1) calc(50% + 32px))',
-    backgroundSize: 'calc(200% + 64px) 100%'
+    backgroundSize: 'calc(200% + 64px) 100%',
   };
 
   const animation = {
     initial: {
-      backgroundPosition: 'calc(-100% - 64px) 0%'
+      backgroundPosition: 'calc(-100% - 64px) 0%',
     },
     animate: {
       backgroundPosition: 'calc(-200% - 64px) 0%',
@@ -43,28 +48,30 @@ const RandomSequence = () => {
         delay: 0.5,
         duration: 3,
         ease: 'linear',
-        repeat: Infinity
-      }
+        repeat: Number.POSITIVE_INFINITY,
+      },
     },
     exit: {
-      opacity: 0
-    }
+      opacity: 0,
+    },
   };
 
   useEffect(() => {
     let timer = 0;
     const callback = (): void => {
       const now = window.performance.now();
+
       if (now < timer) {
         raf = window.requestAnimationFrame(callback);
+
         return;
       }
       timer = now + 200;
       const firstStartIndex = 1200 * Math.random();
       const secondStartIndex = 1200 * Math.random();
+
       firstSequenceRef.current =
-        sequence.slice(firstStartIndex, firstStartIndex + 600) +
-        sequence.slice(0, Math.max(0, firstStartIndex - 600));
+        sequence.slice(firstStartIndex, firstStartIndex + 600) + sequence.slice(0, Math.max(0, firstStartIndex - 600));
       secondSequenceRef.current =
         sequence.slice(secondStartIndex, secondStartIndex + 600) +
         sequence.slice(0, Math.max(0, secondStartIndex - 600));
@@ -73,6 +80,7 @@ const RandomSequence = () => {
       raf = window.requestAnimationFrame(callback);
     };
     let raf = window.requestAnimationFrame(callback);
+
     return () => {
       window.cancelAnimationFrame(raf);
     };
@@ -88,12 +96,12 @@ const RandomSequence = () => {
           width: '100%',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
         }}
       >
         <Box
           sx={{
-            width: 380
+            width: 380,
           }}
         >
           <Box
@@ -107,13 +115,12 @@ const RandomSequence = () => {
               lineHeight: '14px',
               textAlign: 'center',
               wordBreak: 'break-all',
-              color: 'rgba(255, 255, 255, 0.12)'
+              color: 'rgba(255, 255, 255, 0.12)',
             }}
           >
             <Box
               sx={{
-                backgroundImage:
-                  'radial-gradient(172px 152px, rgba(255, 255, 255, 0), rgb(22 22 22))',
+                backgroundImage: 'radial-gradient(172px 152px, rgba(255, 255, 255, 0), rgb(22 22 22))',
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
@@ -121,7 +128,7 @@ const RandomSequence = () => {
                 height: 800,
                 ml: '-300px',
                 mt: '-400px',
-                zIndex: 10
+                zIndex: 10,
               }}
             />
             <Box
@@ -130,7 +137,7 @@ const RandomSequence = () => {
                 overflow: 'hidden',
                 left: 0,
                 bottom: 0,
-                width: '100%'
+                width: '100%',
               }}
             >
               <Box
@@ -138,7 +145,7 @@ const RandomSequence = () => {
                 component={motion.div}
                 sx={{
                   mb: '-14px',
-                  ...style
+                  ...style,
                 }}
                 {...animation}
               >
@@ -151,7 +158,7 @@ const RandomSequence = () => {
                 overflow: 'hidden',
                 left: 0,
                 top: '100%',
-                width: '100%'
+                width: '100%',
               }}
             >
               <Box
@@ -159,7 +166,7 @@ const RandomSequence = () => {
                 component={motion.div}
                 sx={{
                   mb: '-14px',
-                  ...style
+                  ...style,
                 }}
                 {...animation}
               >
@@ -176,7 +183,7 @@ const RandomSequence = () => {
               height: 80,
               background:
                 'radial-gradient(120.05% 100% at 50% 0%,rgba(255, 255, 255, 0) 33.78%,rgb(22 22 22) 100%),rgba(255, 255, 255, .005)',
-              zIndex: 12
+              zIndex: 12,
             }}
           />
         </Box>

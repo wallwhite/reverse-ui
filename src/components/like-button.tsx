@@ -1,12 +1,12 @@
-import { Box } from '@mui/system';
-import { AnimatePresence, motion, Transition, Variant } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { Box } from '@mui/system';
+import { AnimatePresence, motion, type Transition } from 'framer-motion';
 
 const transition: Transition = {
   type: 'spring',
   stiffness: 600,
   damping: 100,
-  duration: 0.5
+  duration: 0.5,
 };
 
 interface LikeButtonProps {
@@ -32,6 +32,7 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
       const tid = setTimeout(() => {
         setShouldAnimate((prevState) => !prevState);
       }, 520);
+
       return () => {
         clearTimeout(tid);
       };
@@ -51,11 +52,12 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
         gap: '16px',
         cursor: 'pointer',
         transition: 'background 0.2s ease-out',
-        boxShadow: 'rgba(255, 255, 255, 0.02) 1px 1px 0px 0px inset, rgba(255, 255, 255, 0.02) -1px -1px 0px 0px inset, rgba(255, 255, 255, 0.02) 1px -1px 0px 0px inset, rgba(255, 255, 255, 0.02) -1px 1px 0px 0px inset, rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.175) 0px 4px 8px 0px',
+        boxShadow:
+          'rgba(255, 255, 255, 0.02) 1px 1px 0px 0px inset, rgba(255, 255, 255, 0.02) -1px -1px 0px 0px inset, rgba(255, 255, 255, 0.02) 1px -1px 0px 0px inset, rgba(255, 255, 255, 0.02) -1px 1px 0px 0px inset, rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.175) 0px 4px 8px 0px',
         '&:hover': {
-          background: 'linear-gradient(rgb(35 35 35) 0%, rgb(35 35 35) 100%)'
+          background: 'linear-gradient(rgb(35 35 35) 0%, rgb(35 35 35) 100%)',
         },
-        userSelect: 'none'
+        userSelect: 'none',
       }}
       onClick={handleClick}
     >
@@ -64,7 +66,7 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
           pl: '12px',
           display: 'flex',
           alignItems: 'center',
-          gap: '16px'
+          gap: '16px',
         }}
       >
         <Box
@@ -72,65 +74,71 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
             position: 'relative',
             width: 20,
             height: 20,
-            mt: '6px'
+            mt: '6px',
           }}
           tabIndex={-1}
         >
           <Box
             component={motion.div}
-            animate={shouldAnimate ? {
-              y: -6,
-              x: -2,
-              rotate: -2
-            } : {}}
+            animate={
+              shouldAnimate
+                ? {
+                    y: -6,
+                    x: -2,
+                    rotate: -2,
+                  }
+                : {}
+            }
             transition={{
               type: 'spring',
               stiffness: 800,
               damping: 100,
-              duration: 0.5
+              duration: 0.5,
             }}
             sx={{
               position: 'absolute',
               zIndex: 2,
               left: '2px',
               bottom: '2px',
-              display: 'flex'
+              display: 'flex',
             }}
           >
             <LikeIcon active={isLiked} />
           </Box>
           <Box
             component={motion.div}
-            animate={shouldAnimate ? {
-              y: -8,
-              x: 1,
-              rotate: 2
-            } : {}}
+            animate={
+              shouldAnimate
+                ? {
+                    y: -8,
+                    x: 1,
+                    rotate: 2,
+                  }
+                : {}
+            }
             transition={{
               type: 'spring',
               stiffness: 600,
               damping: 100,
               duration: 0.5,
-              delay: 0.05
+              delay: 0.05,
             }}
             sx={{
               position: 'absolute',
               zIndex: 1,
               bottom: '8px',
               right: '-5px',
-              display: 'flex'
+              display: 'flex',
             }}
           >
             <LikeIcon active={isLiked} />
           </Box>
-          <AnimatePresence>
-            {shouldAnimate && <Confetti />}
-          </AnimatePresence>
+          <AnimatePresence>{shouldAnimate && <Confetti />}</AnimatePresence>
         </Box>
         <Box
           sx={{
             color: 'hsl(0 0% 99%)',
-            fontWeight: 500
+            fontWeight: 500,
           }}
         >
           {isLiked ? 'Liked' : 'Like'}
@@ -139,14 +147,14 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
       <Box
         sx={{
           py: '6px',
-          height: '100%'
+          height: '100%',
         }}
       >
         <Box
           sx={{
             width: '1px',
             height: '100%',
-            background: 'rgba(255, 255, 255, 0.05)'
+            background: 'rgba(255, 255, 255, 0.05)',
           }}
         />
       </Box>
@@ -161,7 +169,7 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
           alignItems: 'center',
           flexDirection: 'column',
           justifyContent: 'center',
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
         component={motion.div}
         layout
@@ -170,7 +178,7 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
           sx={{
             visibility: 'hidden',
             height: 0,
-            opacity: 0
+            opacity: 0,
           }}
         >
           20
@@ -179,7 +187,7 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
           sx={{
             visibility: 'hidden',
             height: 0,
-            opacity: 0
+            opacity: 0,
           }}
         >
           21
@@ -189,18 +197,18 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
           sx={{
             position: isLiked ? 'absolute' : 'relative',
             opacity: isLiked ? 0 : 1,
-            top: isLiked ? -22 : 0
+            top: isLiked ? -22 : 0,
           }}
           animate={{
             opacity: isLiked ? 0 : 1,
-            top: isLiked ? -22 : 0
+            top: isLiked ? -22 : 0,
           }}
           transition={{
             type: 'spring',
             damping: 60,
             stiffness: 500,
             duration: 0.3,
-            ease: [0.45, 0, 0.55, 1]
+            ease: [0.45, 0, 0.55, 1],
           }}
         >
           {count}
@@ -210,19 +218,19 @@ const LikeButton = ({ onClick, count = 0, isLiked: isLikedProp = false }: LikeBu
           sx={{
             position: isLiked ? 'relative' : 'absolute',
             opacity: isLiked ? 1 : 0,
-            bottom: isLiked ? 0 : -22
+            bottom: isLiked ? 0 : -22,
           }}
           animate={{
             color: 'hsl(0 0% 99%)',
             opacity: isLiked ? 1 : 0,
-            bottom: isLiked ? 0 : -22
+            bottom: isLiked ? 0 : -22,
           }}
           transition={{
             type: 'spring',
             damping: 60,
             stiffness: 500,
             duration: 0.3,
-            ease: [0.45, 0, 0.55, 1]
+            ease: [0.45, 0, 0.55, 1],
           }}
         >
           {count + 1}
@@ -249,7 +257,8 @@ const LikeIcon = ({ active }: LikeIconProps) => {
       viewBox="0 0 25 25"
       fill={active ? 'hsl(0 0% 99%)' : 'rgb(35, 35, 35)'}
       style={{
-        filter: 'drop-shadow(2px 0 0 rgb(35 35 35)) drop-shadow(-2px 0 0 rgb(35 35 35)) drop-shadow(0 2px 0 rgb(35 35 35)) drop-shadow(0 -2px 0 rgb(35 35 35))'
+        filter:
+          'drop-shadow(2px 0 0 rgb(35 35 35)) drop-shadow(-2px 0 0 rgb(35 35 35)) drop-shadow(0 2px 0 rgb(35 35 35)) drop-shadow(0 -2px 0 rgb(35 35 35))',
       }}
     >
       <path d="M7 10v12M15 5.88L14 10h5.83a2 2 0 011.92 2.56l-2.33 8A2 2 0 0117.5 22H4a2 2 0 01-2-2v-8a2 2 0 012-2h2.76a2 2 0 001.79-1.11L12 2a3.13 3.13 0 013 3.88z" />
@@ -270,22 +279,22 @@ const Confetti = () => {
   const variants = {
     initial: {
       opacity: 0,
-      scale: 0
+      scale: 0,
     },
     animate: (custom: ConfettiCustom) => ({
       opacity: 1,
       scale: 1,
       x: custom.animateX,
       y: custom.animateY,
-      rotate: custom.animateRotate ?? 0
+      rotate: custom.animateRotate ?? 0,
     }),
     exit: (custom: ConfettiCustom) => ({
       opacity: 0.5,
       scale: 0,
       x: custom.exitX,
       y: custom.exitY,
-      rotate: custom.exitRotate ?? 0
-    })
+      rotate: custom.exitRotate ?? 0,
+    }),
   };
 
   return (
@@ -300,11 +309,11 @@ const Confetti = () => {
           animateX: 8,
           animateY: -12,
           exitX: 18,
-          exitY: -15
+          exitY: -15,
         }}
         transition={{
           ...transition,
-          stiffness: 600
+          stiffness: 600,
         }}
         sx={{
           position: 'absolute',
@@ -313,7 +322,7 @@ const Confetti = () => {
           height: 6,
           borderRadius: '50%',
           bottom: -14,
-          right: 1
+          right: 1,
         }}
       />
       <Box
@@ -326,11 +335,11 @@ const Confetti = () => {
           animateX: 7,
           animateY: -14,
           exitX: 27,
-          exitY: -10
+          exitY: -10,
         }}
         transition={{
           ...transition,
-          stiffness: 500
+          stiffness: 500,
         }}
         sx={{
           position: 'absolute',
@@ -339,7 +348,7 @@ const Confetti = () => {
           height: 8,
           borderRadius: '50%',
           bottom: -4,
-          right: -10
+          right: -10,
         }}
       />
       <Box
@@ -352,11 +361,11 @@ const Confetti = () => {
           animateX: 8,
           animateY: -26,
           exitX: 13,
-          exitY: -22
+          exitY: -22,
         }}
         transition={{
           ...transition,
-          stiffness: 800
+          stiffness: 800,
         }}
         sx={{
           position: 'absolute',
@@ -365,7 +374,7 @@ const Confetti = () => {
           height: 6,
           borderRadius: '50%',
           top: 0,
-          right: -1
+          right: -1,
         }}
       />
       <Box
@@ -378,11 +387,11 @@ const Confetti = () => {
           animateX: -26,
           animateY: -14,
           exitX: -30,
-          exitY: -17
+          exitY: -17,
         }}
         transition={{
           ...transition,
-          stiffness: 600
+          stiffness: 600,
         }}
         sx={{
           position: 'absolute',
@@ -391,7 +400,7 @@ const Confetti = () => {
           height: 6,
           borderRadius: '50%',
           left: 12,
-          top: 8
+          top: 8,
         }}
       />
       <Box
@@ -406,17 +415,17 @@ const Confetti = () => {
           exitX: -16,
           exitY: -17,
           animateRotate: -30,
-          exitRotate: -70
+          exitRotate: -70,
         }}
         transition={{
           ...transition,
-          stiffness: 600
+          stiffness: 600,
         }}
         sx={{
           position: 'absolute',
           left: 3,
           top: -15,
-          display: 'flex'
+          display: 'flex',
         }}
       >
         <StarIcon />
@@ -433,17 +442,17 @@ const Confetti = () => {
           exitX: 26,
           exitY: -5,
           animateRotate: 30,
-          exitRotate: 70
+          exitRotate: 70,
         }}
         transition={{
           ...transition,
-          stiffness: 600
+          stiffness: 600,
         }}
         sx={{
           position: 'absolute',
           left: 10,
           top: -10,
-          display: 'flex'
+          display: 'flex',
         }}
       >
         <StarIcon />

@@ -1,5 +1,5 @@
-import { Box, SxProps } from '@mui/system';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Box, type SxProps } from '@mui/system';
 
 const MacbookKeyboard: React.FC = () => {
   const [activeKeys, setActiveKeys] = useState<string[]>([]);

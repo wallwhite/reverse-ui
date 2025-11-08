@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useAnimationFrame } from 'framer-motion';
 import { Box } from '@mui/system';
+import { useAnimationFrame } from 'framer-motion';
 
 interface ParticleVortexProps {
   centerSize?: number;
@@ -54,6 +54,29 @@ interface Line {
 
 type EaseName = 'linear' | 'inExpo' | 'outCubic';
 
+const easeInExpo = (x: number): number => {
+  return x === 0 ? 0 : 2 ** (10 * x - 10);
+};
+
+const easeOutCubic = (x: number): number => {
+  return 1 - (1 - x) ** 3;
+};
+
+const linear = (x: number): number => {
+  return x;
+};
+
+const tweenValue = (start: number, end: number, p: number, ease: EaseName = 'linear'): number => {
+  const delta = end - start;
+  const easeFn: Record<EaseName, (x: number) => number> = {
+    linear,
+    inExpo: easeInExpo,
+    outCubic: easeOutCubic,
+  };
+
+  return start + delta * easeFn[ease](p);
+};
+
 const ParticleVortex: React.FC<ParticleVortexProps> = ({
   centerSize = 128,
   particleCount = 500,
@@ -75,28 +98,6 @@ const ParticleVortex: React.FC<ParticleVortexProps> = ({
   const [startDisc, setStartDisc] = useState<DiscPosition>({ x: 0, y: 0, w: 0, h: 0 });
   const [endDisc, setEndDisc] = useState<DiscPosition>({ x: 0, y: 0, w: 0, h: 0 });
 
-  const easeInExpo = (x: number): number => {
-    return x === 0 ? 0 : Math.pow(2, 10 * x - 10);
-  };
-
-  const easeOutCubic = (x: number): number => {
-    return 1 - Math.pow(1 - x, 3);
-  };
-
-  const linear = (x: number): number => {
-    return x;
-  };
-
-  const tweenValue = (start: number, end: number, p: number, ease: EaseName = 'linear'): number => {
-    const delta = end - start;
-    const easeFn: Record<EaseName, (x: number) => number> = {
-      linear,
-      inExpo: easeInExpo,
-      outCubic: easeOutCubic,
-    };
-    return start + delta * easeFn[ease](p);
-  };
-
   const initParticle = (forced = false): Particle => {
     return {
       lineIndex: Math.round((lineCount - 1) * Math.random()),
@@ -111,12 +112,14 @@ const ParticleVortex: React.FC<ParticleVortexProps> = ({
     if (!containerRef.current) return;
 
     const rect = containerRef.current.getBoundingClientRect();
+
     setDimensions({
       width: rect.width,
       height: rect.height,
     });
 
     const dpi = window.devicePixelRatio;
+
     setRender({
       width: rect.width * dpi,
       height: rect.height * dpi,
@@ -124,6 +127,7 @@ const ParticleVortex: React.FC<ParticleVortexProps> = ({
     });
 
     const diag = Math.hypot(rect.width, rect.height);
+
     setStartDisc({
       x: rect.width * 0.5,
       y: rect.height * 0.5,
@@ -205,8 +209,12 @@ const ParticleVortex: React.FC<ParticleVortexProps> = ({
     ctx.closePath();
 
     discs.forEach((disc) => {
+      if (disc.x === undefined || disc.y === undefined || disc.w === undefined || disc.h === undefined) {
+        return;
+      }
+
       ctx.beginPath();
-      ctx.ellipse(disc.x!, disc.y!, disc.w!, disc.h!, 0, 0, Math.PI * 2);
+      ctx.ellipse(disc.x, disc.y, disc.w, disc.h, 0, 0, Math.PI * 2);
       ctx.stroke();
       ctx.closePath();
     });
@@ -223,6 +231,7 @@ const ParticleVortex: React.FC<ParticleVortexProps> = ({
 
     particles.forEach((particle) => {
       const line = lines[particle.lineIndex];
+
       if (!line) return;
 
       const start = {
@@ -268,6 +277,7 @@ const ParticleVortex: React.FC<ParticleVortexProps> = ({
 
   useAnimationFrame((time) => {
     const ctx = canvasRef.current?.getContext('2d');
+
     if (!ctx) return;
 
     setDiscs((prevDiscs) =>
@@ -276,14 +286,14 @@ const ParticleVortex: React.FC<ParticleVortexProps> = ({
           ...disc,
           p: (disc.p + discSpeed) % 1,
         }))
-        .map((disc) => tweenDisc(disc))
+        .map((disc) => tweenDisc(disc)),
     );
 
     setParticles((prevParticles) =>
       prevParticles.map((particle) => ({
         ...particle,
         p: particle.p < 1 ? particle.p + particle.v : 0,
-      }))
+      })),
     );
 
     updateLines(time);

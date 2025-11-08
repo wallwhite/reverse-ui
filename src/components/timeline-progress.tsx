@@ -1,13 +1,6 @@
+import { useEffect, useState, type ReactNode } from 'react';
 import { Box } from '@mui/system';
-import {
-  AnimatePresence,
-  animate,
-  motion,
-  useMotionValue,
-  useTransform,
-  Variants
-} from 'framer-motion';
-import { useEffect, useState, ReactNode } from 'react';
+import { AnimatePresence, animate, motion, useMotionValue, useTransform, type Variants } from 'framer-motion';
 
 const timelineVariants: Variants = {
   hidden: {},
@@ -15,9 +8,9 @@ const timelineVariants: Variants = {
     transition: {
       when: 'afterChildren',
       staggerChildren: 3,
-      delayChildren: 0.5
-    }
-  }
+      delayChildren: 0.5,
+    },
+  },
 };
 
 const badgeVariants: Variants = {
@@ -25,17 +18,17 @@ const badgeVariants: Variants = {
   visible: {
     backgroundColor: '#37401c',
     color: '#c2da91',
-    borderColor: '#37401c'
-  }
+    borderColor: '#37401c',
+  },
 };
 
 const lineVariants: Variants = {
   hidden: {
-    width: 0
+    width: 0,
   },
   visible: {
-    width: '100%'
-  }
+    width: '100%',
+  },
 };
 
 interface TimelineProgressProps {
@@ -58,7 +51,7 @@ const TimelineProgress = ({ actions = [] }: TimelineProgressProps) => {
           gap: '8px',
           position: 'relative',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
         }}
       >
         {actions.map((action, i) => (
@@ -68,11 +61,63 @@ const TimelineProgress = ({ actions = [] }: TimelineProgressProps) => {
             actions={actions}
             action={action}
             index={i}
-            onAnimationComplete={() => setCurrentItem(Math.min(actions.length - 1, i + 1))}
+            onAnimationComplete={() => {
+              setCurrentItem(Math.min(actions.length - 1, i + 1));
+            }}
           />
         ))}
       </Box>
     </Box>
+  );
+};
+
+const CircularProgress = () => {
+  const progress = useMotionValue(0);
+  const circleFill = useTransform(progress, [0, 94, 100], ['transparent', 'transparent', 'rgb(194, 218, 145)']);
+  const circleLength = useTransform(progress, [0, 100], [0, 1]);
+  const checkmarkPathLength = useTransform(progress, [0, 95, 100], [0, 0, 1]);
+  const circleColor = useTransform(progress, [0, 95, 100], ['#FFCC66', '#FFCC66', '#c2da91']);
+
+  useEffect(() => {
+    animate(progress, 100, {
+      delay: 0.5,
+      duration: 1,
+    }).then(
+      () => {
+        // Animation complete
+      },
+      () => {
+        // Animation error, ignore
+      },
+    );
+  }, [progress]);
+
+  return (
+    <motion.svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 258 258">
+      <motion.path
+        d="M 130 6 C 198.483 6 254 61.517 254 130 C 254 198.483 198.483 254 130 254 C 61.517 254 6 198.483 6 130 C 6 61.517 61.517 6 130 6 Z"
+        fill={circleFill}
+      />
+      <motion.path
+        transform="translate(60 85)"
+        d="M3 50L45 92L134 3"
+        fill="transparent"
+        stroke="#37401c"
+        strokeWidth={14}
+        style={{
+          pathLength: checkmarkPathLength,
+        }}
+      />
+      <motion.path
+        d="M 130 6 C 198.483 6 254 61.517 254 130 C 254 198.483 198.483 254 130 254 C 61.517 254 6 198.483 6 130 C 6 61.517 61.517 6 130 6 Z"
+        fill="transparent"
+        strokeWidth="8"
+        stroke={circleColor}
+        style={{
+          pathLength: circleLength,
+        }}
+      />
+    </motion.svg>
   );
 };
 
@@ -84,24 +129,18 @@ interface TimelineItemProps {
   onAnimationComplete: () => void;
 }
 
-const TimelineItem = ({
-  actions,
-  action,
-  index,
-  isActive,
-  onAnimationComplete
-}: TimelineItemProps) => {
+const TimelineItem = ({ actions, action, index, isActive, onAnimationComplete }: TimelineItemProps) => {
   return (
     <Box
       component={motion.div}
       variants={{
         hidden: {},
-        visible: {}
+        visible: {},
       }}
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '8px'
+        gap: '8px',
       }}
       onAnimationComplete={onAnimationComplete}
     >
@@ -120,8 +159,8 @@ const TimelineItem = ({
           gap: '8px',
           svg: {
             width: 20,
-            height: 20
-          }
+            height: 20,
+          },
         }}
       >
         {isActive && <CircularProgress />}
@@ -130,14 +169,14 @@ const TimelineItem = ({
             <Box
               component={motion.div}
               initial={{
-                x: -20
+                x: -20,
               }}
               animate={{
-                x: 0
+                x: 0,
               }}
               transition={{
                 duration: 0.25,
-                ease: 'easeOut'
+                ease: 'easeOut',
               }}
             >
               {action}
@@ -152,7 +191,7 @@ const TimelineItem = ({
             height: '54px',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           <Box
@@ -160,7 +199,7 @@ const TimelineItem = ({
               width: '54px',
               height: '2px',
               transform: 'rotate(90deg)',
-              background: '#e8e8e8'
+              background: '#e8e8e8',
             }}
           >
             <Box
@@ -168,65 +207,18 @@ const TimelineItem = ({
               variants={lineVariants}
               transition={{
                 duration: 2.75,
-                ease: 'linear'
+                ease: 'linear',
               }}
               sx={{
                 height: '100%',
                 width: '0%',
-                background: '#37401c'
+                background: '#37401c',
               }}
             />
           </Box>
         </Box>
       )}
     </Box>
-  );
-};
-
-const CircularProgress = () => {
-  const progress = useMotionValue(0);
-  const circleFill = useTransform(
-    progress,
-    [0, 94, 100],
-    ['transparent', 'transparent', 'rgb(194, 218, 145)']
-  );
-  const circleLength = useTransform(progress, [0, 100], [0, 1]);
-  const checkmarkPathLength = useTransform(progress, [0, 95, 100], [0, 0, 1]);
-  const circleColor = useTransform(progress, [0, 95, 100], ['#FFCC66', '#FFCC66', '#c2da91']);
-
-  useEffect(() => {
-    animate(progress, 100, {
-      delay: 0.5,
-      duration: 1
-    });
-  }, [progress]);
-
-  return (
-    <motion.svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 258 258">
-      <motion.path
-        d="M 130 6 C 198.483 6 254 61.517 254 130 C 254 198.483 198.483 254 130 254 C 61.517 254 6 198.483 6 130 C 6 61.517 61.517 6 130 6 Z"
-        fill={circleFill}
-      />
-      <motion.path
-        transform="translate(60 85)"
-        d="M3 50L45 92L134 3"
-        fill="transparent"
-        stroke="#37401c"
-        strokeWidth={14}
-        style={{
-          pathLength: checkmarkPathLength
-        }}
-      />
-      <motion.path
-        d="M 130 6 C 198.483 6 254 61.517 254 130 C 254 198.483 198.483 254 130 254 C 61.517 254 6 198.483 6 130 C 6 61.517 61.517 6 130 6 Z"
-        fill="transparent"
-        strokeWidth="8"
-        stroke={circleColor}
-        style={{
-          pathLength: circleLength
-        }}
-      />
-    </motion.svg>
   );
 };
 

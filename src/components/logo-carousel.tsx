@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 
 type Logo = string | React.ComponentType;
 
@@ -16,7 +16,9 @@ const LogoCarousel: React.FC<LogoCarouselProps> = ({ logos }) => {
       setCurrentIndex((prev) => (prev + 1) % logos.length);
     }, 2500);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, [logos]);
 
   const currentLogos = logos[currentIndex];
@@ -134,7 +136,7 @@ const LogoRenderer: React.FC<{ logo: Logo }> = ({ logo }) => {
   if (typeof logo === 'string') {
     return (
       <Box
-        component='img'
+        component="img"
         src={logo}
         sx={{
           width: '100%',
@@ -146,6 +148,7 @@ const LogoRenderer: React.FC<{ logo: Logo }> = ({ logo }) => {
   }
 
   const LogoComponent = logo;
+
   return <LogoComponent />;
 };
 

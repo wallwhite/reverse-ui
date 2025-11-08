@@ -1,5 +1,5 @@
-import { Box } from '@mui/system';
 import { keyframes } from '@emotion/react';
+import { Box } from '@mui/system';
 
 const rotateKeyframe = keyframes`
   0% {
@@ -27,11 +27,11 @@ const CoolBadge = ({ color = 'green', label }: CoolBadgeProps) => {
         display: 'inline-flex',
         position: 'relative',
         ...(color === 'blue' && {
-          background: '#d1e7ff'
+          background: '#d1e7ff',
         }),
         ...(color === 'green' && {
-          background: '#152829'
-        })
+          background: '#152829',
+        }),
       }}
     >
       <Box
@@ -43,11 +43,11 @@ const CoolBadge = ({ color = 'green', label }: CoolBadgeProps) => {
           maskComposite: 'exclude',
           borderRadius: 'inherit',
           ...(color === 'blue' && {
-            border: '1px solid #b7dbff'
+            border: '1px solid #b7dbff',
           }),
           ...(color === 'green' && {
-            border: '1px solid #194b3a'
-          })
+            border: '1px solid #194b3a',
+          }),
         }}
       >
         <Box
@@ -57,12 +57,12 @@ const CoolBadge = ({ color = 'green', label }: CoolBadgeProps) => {
             inset: -1,
             ...(color === 'blue' && {
               background:
-                'conic-gradient(from 45deg at 50% 50%,#b7dbff,#0080ff80,#b7dbff,#b7dbff,#b7dbff,#0080ff,#b7dbff,#b7dbff,#b7dbff)'
+                'conic-gradient(from 45deg at 50% 50%,#b7dbff,#0080ff80,#b7dbff,#b7dbff,#b7dbff,#0080ff,#b7dbff,#b7dbff,#b7dbff)',
             }),
             ...(color === 'green' && {
               background:
-                'conic-gradient(from 45deg at 50% 50%, #194b3a, #26d97f66, #194b3a, #194b3a, #194b3a, #26d97f, #194b3a, #194b3a, #194b3a)'
-            })
+                'conic-gradient(from 45deg at 50% 50%, #194b3a, #26d97f66, #194b3a, #194b3a, #194b3a, #26d97f, #194b3a, #194b3a, #194b3a)',
+            }),
           }}
         />
       </Box>
@@ -71,11 +71,11 @@ const CoolBadge = ({ color = 'green', label }: CoolBadgeProps) => {
           fontWeight: 500,
           fontSize: 11,
           ...(color === 'blue' && {
-            color: '#0080ff'
+            color: '#0080ff',
           }),
           ...(color === 'green' && {
-            color: '#26d97f'
-          })
+            color: '#26d97f',
+          }),
         }}
       >
         {label}

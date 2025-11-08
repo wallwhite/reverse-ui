@@ -1,16 +1,113 @@
-import { Box, SxProps } from '@mui/system';
-import { animate, motion, useSpring, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import { Box, type SxProps } from '@mui/system';
+import { animate, motion, useSpring, useTransform } from 'framer-motion';
 
 interface XRayProps {
   children: React.ReactNode;
 }
 
+type CornerPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
+interface CornerProps {
+  position: CornerPosition;
+}
+
+const Corner: React.FC<CornerProps> = ({ position }) => {
+  const baseStyles: SxProps = {
+    position: 'absolute',
+    width: 15,
+    height: 15,
+    '&:before': {
+      content: '""',
+      position: 'absolute',
+      background: '#009e86',
+      width: 15,
+      height: '1px',
+    },
+    '&:after': {
+      content: '""',
+      position: 'absolute',
+      background: '#009e86',
+      width: '1px',
+      height: 15,
+    },
+  };
+
+  const positionStyles: Record<CornerPosition, SxProps> = {
+    'top-left': {
+      top: '-1px',
+      left: '-1px',
+      '&:before': {
+        left: 0,
+        top: 0,
+      },
+      '&:after': {
+        left: 0,
+        top: 0,
+      },
+    },
+    'top-right': {
+      top: '-1px',
+      right: '-1px',
+      '&:before': {
+        right: 0,
+        top: 0,
+      },
+      '&:after': {
+        right: 0,
+        top: 0,
+      },
+    },
+    'bottom-left': {
+      bottom: '-1px',
+      left: '-1px',
+      '&:before': {
+        left: 0,
+        bottom: 0,
+      },
+      '&:after': {
+        left: 0,
+        bottom: 0,
+      },
+    },
+    'bottom-right': {
+      bottom: '-1px',
+      right: '-1px',
+      '&:before': {
+        right: 0,
+        bottom: 0,
+      },
+      '&:after': {
+        right: 0,
+        bottom: 0,
+      },
+    },
+  };
+
+  return <Box sx={{ ...baseStyles, ...positionStyles[position] }} />;
+};
+
+const constrainValue = (value: number, [min, max]: [number, number], multiplier = 2): number => {
+  if (value > max) {
+    const diff = value - max;
+
+    return max + (diff > 0 ? Math.sqrt(diff) : -Math.sqrt(-diff)) * multiplier;
+  }
+
+  if (value < min) {
+    const diff = value - min;
+
+    return min + (diff > 0 ? Math.sqrt(diff) : -Math.sqrt(-diff)) * multiplier;
+  }
+
+  return value;
+};
+
 const XRay: React.FC<XRayProps> = ({ children }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseStartY = useRef(0);
   const [scannerOpacity, setScannerOpacity] = useState(0);
-  const animationRef = useRef<any>(null);
+  const animationRef = useRef<ReturnType<typeof animate> | null>(null);
 
   const initialScannerPosition = 174;
   const scanLineOffset = 2;
@@ -28,11 +125,17 @@ const XRay: React.FC<XRayProps> = ({ children }) => {
       animationRef.current.stop();
     }
 
+    const ANIMATION_DELAY = 300;
+
     const startAnimation = async () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current) {
+        return;
+      }
 
       y.set(containerRef.current.clientHeight);
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await new Promise((resolve) => {
+        setTimeout(resolve, ANIMATION_DELAY);
+      });
       setScannerOpacity(1);
 
       animationRef.current = animate(y, initialScannerPosition, {
@@ -43,31 +146,24 @@ const XRay: React.FC<XRayProps> = ({ children }) => {
       });
     };
 
-    startAnimation();
+    startAnimation().catch(() => {
+      // Animation error, ignore
+    });
 
     return () => {
       if (animationRef.current) {
         animationRef.current.stop();
       }
     };
-  }, [y]);
-
-  const constrainValue = (value: number, [min, max]: [number, number], multiplier = 2): number => {
-    if (value > max) {
-      const diff = value - max;
-      return max + (diff > 0 ? Math.sqrt(diff) : -Math.sqrt(-diff)) * multiplier;
-    }
-
-    if (value < min) {
-      const diff = value - min;
-      return min + (diff > 0 ? Math.sqrt(diff) : -Math.sqrt(-diff)) * multiplier;
-    }
-
-    return value;
-  };
+  }, [y, initialScannerPosition]);
 
   const handleMouseEnter = () => {
-    const { y: rectY } = containerRef.current!.getBoundingClientRect();
+    if (!containerRef.current) {
+      return;
+    }
+
+    const { y: rectY } = containerRef.current.getBoundingClientRect();
+
     mouseStartY.current = rectY;
   };
 
@@ -76,12 +172,32 @@ const XRay: React.FC<XRayProps> = ({ children }) => {
       type: 'spring',
       stiffness: 350,
       damping: 50,
-    });
+    }).then(
+      () => {
+        // Animation complete
+      },
+      () => {
+        // Animation error, ignore
+      },
+    );
   };
 
   const handleMouseMove = (event: React.MouseEvent) => {
+    if (!containerRef.current) {
+      return;
+    }
+
+    const MIN_OFFSET = 100;
+    const MAX_OFFSET_SUBTRACT = 100;
+    const CONSTRAIN_MULTIPLIER = 6;
+
     let offset = event.clientY - mouseStartY.current;
-    offset = constrainValue(offset, [100, containerRef.current!.offsetHeight - 100], 6);
+
+    offset = constrainValue(
+      offset,
+      [MIN_OFFSET, containerRef.current.offsetHeight - MAX_OFFSET_SUBTRACT],
+      CONSTRAIN_MULTIPLIER,
+    );
     y.set(offset);
   };
 
@@ -164,87 +280,6 @@ const XRay: React.FC<XRayProps> = ({ children }) => {
       </Box>
     </Box>
   );
-};
-
-type CornerPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-
-interface CornerProps {
-  position: CornerPosition;
-}
-
-const Corner: React.FC<CornerProps> = ({ position }) => {
-  const baseStyles: SxProps = {
-    position: 'absolute',
-    width: 15,
-    height: 15,
-    '&:before': {
-      content: '""',
-      position: 'absolute',
-      background: '#009e86',
-      width: 15,
-      height: '1px',
-    },
-    '&:after': {
-      content: '""',
-      position: 'absolute',
-      background: '#009e86',
-      width: '1px',
-      height: 15,
-    },
-  };
-
-  const positionStyles: Record<CornerPosition, SxProps> = {
-    'top-left': {
-      top: '-1px',
-      left: '-1px',
-      '&:before': {
-        left: 0,
-        top: 0,
-      },
-      '&:after': {
-        left: 0,
-        top: 0,
-      },
-    },
-    'top-right': {
-      top: '-1px',
-      right: '-1px',
-      '&:before': {
-        right: 0,
-        top: 0,
-      },
-      '&:after': {
-        right: 0,
-        top: 0,
-      },
-    },
-    'bottom-left': {
-      bottom: '-1px',
-      left: '-1px',
-      '&:before': {
-        left: 0,
-        bottom: 0,
-      },
-      '&:after': {
-        left: 0,
-        bottom: 0,
-      },
-    },
-    'bottom-right': {
-      bottom: '-1px',
-      right: '-1px',
-      '&:before': {
-        right: 0,
-        bottom: 0,
-      },
-      '&:after': {
-        right: 0,
-        bottom: 0,
-      },
-    },
-  };
-
-  return <Box sx={{ ...baseStyles, ...positionStyles[position] }} />;
 };
 
 export { XRay };

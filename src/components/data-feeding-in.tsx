@@ -1,6 +1,6 @@
+import React, { useEffect, useRef } from 'react';
 import { Box } from '@mui/system';
 import { motion, useAnimation } from 'framer-motion';
-import React, { useEffect, useRef } from 'react';
 
 const paths = [
   'M0 100H55.022C61.8914 100 68.6451 101.769 74.6324 105.137L120.368 130.863C126.355 134.231 133.109 136 139.978 136H201.5',
@@ -9,7 +9,7 @@ const paths = [
   'M0 228H48.2171C59.2463 228 69.7861 223.446 77.3451 215.415L117.655 172.585C125.214 164.554 135.754 160 146.783 160H201.5',
   'M0 287H41.7852C56.4929 287 70.0142 278.929 76.994 265.983L118.49 189.017C125.47 176.071 138.991 168 153.699 168H202',
   'M0 144L201 145',
-  'M0 1H41.5946C56.3171 1 69.8495 9.08744 76.823 22.0537L118.177 98.9463C125.15 111.913 138.683 120 153.405 120H201.5'
+  'M0 1H41.5946C56.3171 1 69.8495 9.08744 76.823 22.0537L118.177 98.9463C125.15 111.913 138.683 120 153.405 120H201.5',
 ];
 
 const DataFeedingIn = () => {
@@ -21,20 +21,29 @@ const DataFeedingIn = () => {
       return;
     }
 
-    const pulseGradients = Array.from(svgRef.current.querySelectorAll('[id*=pulse]'));
+    const pulseGradients = [...svgRef.current.querySelectorAll('[id*=pulse]')];
 
-    const animate = async () => {
-      pulseGradients.forEach((gradient, i) => {
-        controls.start({
-          x1: ['-50%', '100%'],
-          x2: ['50%', '150%'],
-          transition: {
-            duration: 1.5,
-            ease: 'linear',
-            repeat: Infinity,
-            delay: 0.25
-          }
-        });
+    const animate = () => {
+      pulseGradients.forEach((_gradient, _i) => {
+        controls
+          .start({
+            x1: ['-50%', '100%'],
+            x2: ['50%', '150%'],
+            transition: {
+              duration: 1.5,
+              ease: 'linear',
+              repeat: Number.POSITIVE_INFINITY,
+              delay: 0.25,
+            },
+          })
+          .then(
+            () => {
+              // Animation complete
+            },
+            () => {
+              // Animation error, ignore
+            },
+          );
       });
     };
 
@@ -48,14 +57,14 @@ const DataFeedingIn = () => {
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        mt: '120px'
+        mt: '120px',
       }}
     >
       <Box
         sx={{
           transform: 'rotate(90deg) translateX(40px) translateY(0)',
           height: 80,
-          transformOrigin: 'right'
+          transformOrigin: 'right',
         }}
       >
         <svg
@@ -89,14 +98,7 @@ const DataFeedingIn = () => {
             </React.Fragment>
           ))}
           <defs>
-            <linearGradient
-              id="maskGrad"
-              x1="202"
-              y1="227"
-              x2="32"
-              y2="227"
-              gradientUnits="userSpaceOnUse"
-            >
+            <linearGradient id="maskGrad" x1="202" y1="227" x2="32" y2="227" gradientUnits="userSpaceOnUse">
               <stop stopColor="white" />
               <stop offset="1" stopColor="white" stopOpacity="0" />
             </linearGradient>
@@ -129,7 +131,7 @@ const DataFeedingIn = () => {
           background: 'linear-gradient(rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)',
           borderRadius: '14px',
           height: 260,
-          overflow: 'hidden'
+          overflow: 'hidden',
         }}
       >
         <Box
@@ -137,7 +139,7 @@ const DataFeedingIn = () => {
             padding: '10px',
             display: 'flex',
             gap: '8px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.075)'
+            borderBottom: '1px solid rgba(255, 255, 255, 0.075)',
           }}
         >
           <Box
@@ -145,7 +147,7 @@ const DataFeedingIn = () => {
               width: 8,
               height: 8,
               borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)'
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
             }}
           />
           <Box
@@ -153,7 +155,7 @@ const DataFeedingIn = () => {
               width: 8,
               height: 8,
               borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)'
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
             }}
           />
           <Box
@@ -161,20 +163,20 @@ const DataFeedingIn = () => {
               width: 8,
               height: 8,
               borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)'
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
             }}
           />
         </Box>
         <Box
           sx={{
-            padding: '0'
+            padding: '0',
           }}
         >
           <Box
             sx={{
               display: 'flex',
               overflow: 'hidden',
-              width: '100%'
+              width: '100%',
             }}
           >
             {Array.from({ length: 3 }, (_, index) => (
@@ -190,7 +192,7 @@ const DataFeedingIn = () => {
                   px: '8px',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px'
+                  gap: '8px',
                 }}
               >
                 <Box
@@ -199,7 +201,7 @@ const DataFeedingIn = () => {
                     background: 'rgba(255, 255, 255, 0.15)',
                     width: 16,
                     height: 16,
-                    borderRadius: '4px'
+                    borderRadius: '4px',
                   }}
                 />
                 <Box
@@ -207,36 +209,36 @@ const DataFeedingIn = () => {
                     background: 'rgba(255, 255, 255, 0.075)',
                     height: 8,
                     width: 88,
-                    borderRadius: '4px'
+                    borderRadius: '4px',
                   }}
                 />
               </Box>
             ))}
           </Box>
-          {Array.from({ length: 6 }, (_, i) => (
+          {Array.from({ length: 6 }, (_row, i) => (
             <Box
               key={i}
               component={motion.div}
               sx={{
                 display: 'flex',
                 overflow: 'hidden',
-                width: '100%'
+                width: '100%',
               }}
               initial={{
                 y: 20,
-                opacity: 0
+                opacity: 0,
               }}
               animate={{
                 y: 0,
-                opacity: 1
+                opacity: 1,
               }}
               transition={{
                 ease: 'easeIn',
                 delay: 1.25 + i * 1.5,
-                duration: 0.3
+                duration: 0.3,
               }}
             >
-              {Array.from({ length: 3 }, (_, j) => (
+              {Array.from({ length: 3 }, (_col, j) => (
                 <Box
                   key={i + j}
                   sx={{
@@ -248,7 +250,7 @@ const DataFeedingIn = () => {
                     px: '8px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px'
+                    gap: '8px',
                   }}
                 >
                   <Box
@@ -256,7 +258,7 @@ const DataFeedingIn = () => {
                       background: 'rgba(255, 255, 255, 0.075)',
                       height: 8,
                       width: 88,
-                      borderRadius: '4px'
+                      borderRadius: '4px',
                     }}
                   />
                 </Box>

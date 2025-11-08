@@ -21,7 +21,7 @@ const BarsLoader = () => {
         border: '1px solid #c5e2fe',
         padding: '4px',
         display: 'flex',
-        gap: '4px'
+        gap: '4px',
       }}
     >
       {Array.from({ length: 12 }).map((_, index) => (
@@ -32,7 +32,7 @@ const BarsLoader = () => {
             height: 20,
             background: '#c5e2fe',
             animation: `${fillKeyframe} 1s ease-in-out infinite`,
-            animationDelay: `${index * 0.08}s`
+            animationDelay: `${index * 0.08}s`,
           }}
         />
       ))}

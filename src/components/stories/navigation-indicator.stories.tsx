@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { NavigationIndicator } from '../../index';
 
 const meta = {
@@ -36,7 +36,9 @@ const NavigationWithState = (args: any) => {
       <NavigationIndicator
         {...args}
         activeIndex={activeIndex}
-        onClick={(index) => setActiveIndex(index)}
+        onClick={(index) => {
+          setActiveIndex(index);
+        }}
       />
     </div>
   );

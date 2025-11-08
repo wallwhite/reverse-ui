@@ -46,11 +46,7 @@ export const FastCycle: Story = {
 
 export const LongTexts: Story = {
   args: {
-    texts: [
-      'Welcome to our application',
-      'Experience the difference',
-      'Join thousands of users',
-    ],
+    texts: ['Welcome to our application', 'Experience the difference', 'Join thousands of users'],
     interval: 2500,
   },
 };

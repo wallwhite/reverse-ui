@@ -41,9 +41,7 @@ export const Default: Story = {
   decorators: [
     (Story) => (
       <div style={{ background: '#161616', padding: '60px' }}>
-        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
-          Drag cards to reorder them
-        </p>
+        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>Drag cards to reorder them</p>
         <Story />
       </div>
     ),
@@ -63,9 +61,7 @@ export const LargeCards: Story = {
   decorators: [
     (Story) => (
       <div style={{ background: '#161616', padding: '60px' }}>
-        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>
-          Drag cards to reorder them
-        </p>
+        <p style={{ color: 'white', marginBottom: '20px', textAlign: 'center' }}>Drag cards to reorder them</p>
         <Story />
       </div>
     ),

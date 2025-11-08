@@ -1,6 +1,6 @@
-import { Box, SxProps } from '@mui/system';
+import { type ComponentProps } from 'react';
 import { keyframes } from '@emotion/react';
-import { ComponentProps } from 'react';
+import { Box } from '@mui/system';
 
 const shineKeyframe = keyframes`
   0% {
@@ -49,8 +49,8 @@ const RainbowShineButton = (props: RainbowShineButtonProps) => {
             'linear-gradient(30deg,transparent 20%,transparent 45%,hsla(0,0%,100%, 0.75) 50%,transparent 55%,transparent)',
           transform: 'translateX(100%) rotate(45deg)',
           animation: `${shineKeyframe} 3s ease-in infinite`,
-          animationDelay: '2s'
-        }
+          animationDelay: '2s',
+        },
       }}
       {...props}
     />

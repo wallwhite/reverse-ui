@@ -26,7 +26,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     name: 'Acme UI',
-    description: 'Acme UI is a comprehensive component library built with React and TypeScript. It provides beautiful, accessible components that help you build modern web applications faster.',
+    description:
+      'Acme UI is a comprehensive component library built with React and TypeScript. It provides beautiful, accessible components that help you build modern web applications faster.',
   },
   decorators: [
     (Story) => (
@@ -40,7 +41,8 @@ export const Default: Story = {
 export const ProductDemo: Story = {
   args: {
     name: 'Reverse',
-    description: 'Reverse is a collection of beautifully designed, animated React components. Perfect for building stunning landing pages and interactive interfaces.',
+    description:
+      'Reverse is a collection of beautifully designed, animated React components. Perfect for building stunning landing pages and interactive interfaces.',
   },
   decorators: [
     (Story) => (

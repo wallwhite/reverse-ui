@@ -1,6 +1,6 @@
-import { ReactNode, useState } from 'react';
-import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
+import { type ReactNode, useState } from 'react';
 import { Box } from '@mui/system';
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
 
 interface LinkPreviewProps {
   href: string;
@@ -14,12 +14,13 @@ const LinkPreview = ({ href, children, imageSrc, imageWidth = 220 }: LinkPreview
   const mouseX = useMotionValue(0);
   const previewX = useSpring(mouseX, {
     stiffness: 150,
-    damping: 15
+    damping: 15,
   });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left - imageWidth / 2 - 8;
+
     mouseX.set(x);
   };
 
@@ -27,10 +28,14 @@ const LinkPreview = ({ href, children, imageSrc, imageWidth = 220 }: LinkPreview
     <Box
       sx={{
         position: 'relative',
-        display: 'inline'
+        display: 'inline',
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => {
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+      }}
       onMouseMove={handleMouseMove}
     >
       <a href={href} target="_blank" rel="noopener noreferrer">
@@ -52,25 +57,25 @@ const LinkPreview = ({ href, children, imageSrc, imageWidth = 220 }: LinkPreview
               background: '#fff',
               boxShadow: '0 5px 10px rgba(0,0,0,0.12)',
               borderRadius: '8px',
-              display: 'flex'
+              display: 'flex',
             }}
             initial={{
               opacity: 0,
-              scale: 0.8
+              scale: 0.8,
             }}
             animate={{
               opacity: 1,
-              scale: 1
+              scale: 1,
             }}
             exit={{
               opacity: 0,
-              scale: 0.8
+              scale: 0.8,
             }}
             transition={{
-              duration: 0.2
+              duration: 0.2,
             }}
             style={{
-              x: previewX
+              x: previewX,
             }}
           >
             <Box
@@ -81,7 +86,7 @@ const LinkPreview = ({ href, children, imageSrc, imageWidth = 220 }: LinkPreview
                 width: '100%',
                 height: 'auto',
                 borderRadius: '8px',
-                display: 'block'
+                display: 'block',
               }}
             />
           </Box>

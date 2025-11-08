@@ -1,6 +1,6 @@
-import { Box } from '@mui/system';
-import { motion, Variants } from 'framer-motion';
 import { useState } from 'react';
+import { Box } from '@mui/system';
+import { motion, type Variants } from 'framer-motion';
 
 interface InteractiveEnvelopeProps {
   onOpen?: () => void;
@@ -11,13 +11,13 @@ const InteractiveEnvelope = ({ onOpen, onClose }: InteractiveEnvelopeProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
-    if (!isOpen) {
+    if (isOpen) {
       setTimeout(() => {
-        onOpen?.();
+        onClose?.();
       }, 500);
     } else {
       setTimeout(() => {
-        onClose?.();
+        onOpen?.();
       }, 500);
     }
     setIsOpen((prev) => !prev);
@@ -26,19 +26,19 @@ const InteractiveEnvelope = ({ onOpen, onClose }: InteractiveEnvelopeProps) => {
   const shakeVariants: Variants = {
     initial: {
       rotate: 0,
-      x: 0
+      x: 0,
     },
     shake: {
       rotate: [0, -2, 2, -2, 2, -1, 1, 0],
       x: [0, -3, 3, -3, 3, -1, 1, 0],
       transition: {
         duration: 0.5,
-        repeat: Infinity,
+        repeat: Number.POSITIVE_INFINITY,
         repeatType: 'reverse',
         repeatDelay: 3,
-        ease: 'easeInOut'
-      }
-    }
+        ease: 'easeInOut',
+      },
+    },
   };
 
   return (
@@ -46,34 +46,34 @@ const InteractiveEnvelope = ({ onOpen, onClose }: InteractiveEnvelopeProps) => {
       component={motion.div}
       variants={shakeVariants}
       initial="initial"
-      animate={!isOpen ? 'shake' : undefined}
+      animate={isOpen ? undefined : 'shake'}
       sx={{
         position: 'relative',
-        display: 'inline-block'
+        display: 'inline-block',
       }}
       onClick={handleClick}
     >
       <Box
         component={motion.div}
         initial={{
-          scaleY: 1
+          scaleY: 1,
         }}
         animate={
           isOpen
             ? {
-                scaleY: -1
+                scaleY: -1,
               }
             : undefined
         }
         transition={{
           duration: 0.6,
-          ease: [0.4, 0, 0.2, 1]
+          ease: [0.4, 0, 0.2, 1],
         }}
         sx={{
           position: 'absolute',
           top: 5.95,
           left: 0,
-          transformOrigin: '50% 0.3px'
+          transformOrigin: '50% 0.3px',
         }}
       >
         <EnvelopeTopFold />
@@ -84,28 +84,28 @@ const InteractiveEnvelope = ({ onOpen, onClose }: InteractiveEnvelopeProps) => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          mt: '-15px'
+          mt: '-15px',
         }}
       >
         <Box
           component={motion.img}
           initial={{
             y: 0,
-            opacity: 1
+            opacity: 1,
           }}
           animate={{
             y: isOpen ? 60 : 0,
             opacity: isOpen ? 0 : 1,
             scale: isOpen ? 0.8 : 1,
-            rotate: isOpen ? -10 : 0
+            rotate: isOpen ? -10 : 0,
           }}
           transition={{
             duration: 0.5,
-            ease: 'easeOut'
+            ease: 'easeOut',
           }}
           src="/images/stamp.png"
           sx={{
-            width: 58
+            width: 58,
           }}
         />
       </Box>
@@ -116,18 +116,8 @@ const InteractiveEnvelope = ({ onOpen, onClose }: InteractiveEnvelopeProps) => {
 
 const EnvelopeTopFold = () => {
   return (
-    <svg
-      width="170px"
-      height="142px"
-      viewBox="0 0 144 142"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g
-        style={{ mixBlendMode: 'multiply' }}
-        clipPath="url(#envelopeClip)"
-        opacity="0.7"
-      >
+    <svg width="170px" height="142px" viewBox="0 0 144 142" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g style={{ mixBlendMode: 'multiply' }} clipPath="url(#envelopeClip)" opacity="0.7">
         <g filter="url(#filter0_f_3_73)">
           <path
             d="M3 0L141 0L80.5551 54.3128C77.5309 57.0302 76.0187 58.389 74.3091 58.9044C72.8032 59.3584 71.1968 59.3584 69.6909 58.9044C67.9813 58.389 66.4691 57.0302 63.4449 54.3128L3 0Z"
@@ -181,14 +171,7 @@ const EnvelopeTopFold = () => {
           <rect x="0" y="0" width="145" height="96" rx="3.5px" />
         </clipPath>
         {/* Filters omitted for brevity - include all filter definitions here */}
-        <linearGradient
-          id="paint0_linear_3_73"
-          x1="72"
-          y1="0"
-          x2="72"
-          y2="62"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint0_linear_3_73" x1="72" y1="0" x2="72" y2="62" gradientUnits="userSpaceOnUse">
           <stop offset="0.25" stopColor="#FAFAFB" />
           <stop offset="1" stopColor="#F4F5F6" />
         </linearGradient>
@@ -199,13 +182,7 @@ const EnvelopeTopFold = () => {
 
 const Envelope = () => {
   return (
-    <svg
-      width="170"
-      height="145"
-      viewBox="0 0 170 145"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="170" height="145" viewBox="0 0 170 145" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g filter="url(#filter0_dddd_3_7)">
         <path
           fillRule="evenodd"
@@ -220,25 +197,11 @@ const Envelope = () => {
       </g>
       {/* Additional SVG elements omitted for brevity */}
       <defs>
-        <linearGradient
-          id="paint0_linear_3_7"
-          x1="85"
-          y1="-17.9999"
-          x2="85"
-          y2="102"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint0_linear_3_7" x1="85" y1="-17.9999" x2="85" y2="102" gradientUnits="userSpaceOnUse">
           <stop stopColor="#E6E8EA" />
           <stop offset="1" stopColor="#DDE0E3" />
         </linearGradient>
-        <linearGradient
-          id="paint1_linear_3_7"
-          x1="85"
-          y1="102"
-          x2="85"
-          y2="-17.9999"
-          gradientUnits="userSpaceOnUse"
-        >
+        <linearGradient id="paint1_linear_3_7" x1="85" y1="102" x2="85" y2="-17.9999" gradientUnits="userSpaceOnUse">
           <stop stopColor="#475569" stopOpacity="0.06" />
           <stop offset="1" stopColor="#475569" stopOpacity="0.04" />
         </linearGradient>
