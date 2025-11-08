@@ -1,0 +1,26 @@
+{
+  "editor.formatOnSave": false,
+  "javascript.validate.enable": false,
+  "javascript.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "stylelint.enable": true,
+  "stylelint.validate": [
+    "css",
+    "scss"
+  ],
+  "eslint.debug": true,
+  "eslint.onIgnoredFiles": "warn",
+  "editor.tabSize": 2,
+  "tailwindCSS.experimental.configFile": {
+    "packages/storybook/tailwind.config.mjs": ["packages/theme/**/*", "packages/ui/**/*"],
+    "examples/nextjs-example/tailwind.config.js": "examples/nextjs-example/**/*"
+  },
+  "tailwindCSS.classFunctions": ["tw", "clsx", "tv", "cva", "cn", "cx"],
+  "tailwindCSS.classAttributes": ["class", "className"]
+}
