@@ -6,6 +6,8 @@ const speed = 15;
 const defaultSize = 82;
 
 const GlowingOrb = () => {
+  const size = defaultSize;
+
   return (
     <Box
       sx={{
